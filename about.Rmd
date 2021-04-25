@@ -1,0 +1,19 @@
+---
+title: "About this blog"
+output:
+  postcards::trestles
+image: "images/silouette-1.jpg"
+links:
+  - label: GitHub
+    url: "https://github.com/JonGretar"
+  - label: Twitter
+    url: "https://twitter/JonGretar"
+description: |
+  Some additional details about the blog
+---
+
+## Bio
+
+lorem ipsum
+
+## Education
