@@ -3,6 +3,7 @@ title: "Jón Grétar"
 description: |
   JonGretar - Blog
 output_dir: "docs"
+base_url: "http://jongretar.com/"
 navbar:
   right:
     - text: "Home"

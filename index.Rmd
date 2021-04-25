@@ -1,5 +1,5 @@
 ---
-title: "JonGretar - Blog"
+title: "Jón Grétar"
 site: distill::distill_website
 listing: posts
 ---
