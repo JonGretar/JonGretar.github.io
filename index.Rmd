@@ -1,5 +1,5 @@
 ---
-title: "Jón Grétar"
+title: "Articles"
 site: distill::distill_website
 listing: posts
 ---
