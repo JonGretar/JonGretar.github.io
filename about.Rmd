@@ -1,7 +1,7 @@
 ---
-title: "About this blog"
+title: "About Me"
 output:
-  postcards::trestles
+  postcards::jolla_blue
 image: "images/silouette-1.jpg"
 links:
   - label: GitHub
@@ -9,11 +9,10 @@ links:
   - label: Twitter
     url: "https://twitter/JonGretar"
 description: |
-  Some additional details about the blog
+  Soma basic info about me
 ---
 
-## Bio
 
-lorem ipsum
+Old dev and a forestry student focusing on forest biometrics.
 
-## Education
+Tech Interests: Elixir, RStats, GIS, SmartOS

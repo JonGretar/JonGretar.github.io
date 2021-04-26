@@ -100,25 +100,34 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="A short description of the post."/>
 <meta property="og:url" content="http://jongretar.com/posts/2021-04-25-welcome/"/>
+<meta property="og:image" content="http://jongretar.com/posts/2021-04-25-welcome/welcome_files/figure-html5/unnamed-chunk-4-1.png"/>
+<meta property="og:image:width" content="1248"/>
+<meta property="og:image:height" content="768"/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:site_name" content="Jón Grétar"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
-<meta property="twitter:card" content="summary"/>
+<meta property="twitter:card" content="summary_large_image"/>
 <meta property="twitter:title" content="Jón Grétar: Welcome"/>
 <meta property="twitter:description" content="A short description of the post."/>
 <meta property="twitter:url" content="http://jongretar.com/posts/2021-04-25-welcome/"/>
+<meta property="twitter:image" content="http://jongretar.com/posts/2021-04-25-welcome/welcome_files/figure-html5/unnamed-chunk-4-1.png"/>
+<meta property="twitter:image:width" content="1248"/>
+<meta property="twitter:image:height" content="768"/>
+<meta property="twitter:site" content="@JonGretar"/>
 
 <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry;citation_publication_date=2006;citation_author= Arnór Snorrason;citation_author= Stefán Freyr Einarsson"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Welcome"]},{"type":"character","attributes":{},"value":["A short description of the post."]},{"type":"character","attributes":{},"value":["04-25-2021"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]},{"type":"character","attributes":{},"value":["http://jongretar.com/posts/2021-04-25-welcome/"]},{"type":"character","attributes":{},"value":["http://jongretar.com/posts/2021-04-25-welcome/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","bibliography","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["Welcome"]},{"type":"character","attributes":{},"value":["A short description of the post."]},{"type":"character","attributes":{},"value":["04-25-2021"]},{"type":"character","attributes":{},"value":["library.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["http://jongretar.com/posts/2021-04-25-welcome/"]},{"type":"character","attributes":{},"value":["http://jongretar.com/posts/2021-04-25-welcome/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["welcome_files/anchor-4.2.2/anchor.min.js","welcome_files/bowser-1.9.3/bowser.min.js","welcome_files/distill-2.2.21/template.v2.js","welcome_files/header-attrs-2.7/header-attrs.js","welcome_files/jquery-1.11.3/jquery.min.js","welcome_files/popper-2.6.0/popper.min.js","welcome_files/tippy-6.2.7/tippy-bundle.umd.min.js","welcome_files/tippy-6.2.7/tippy-light-border.css","welcome_files/tippy-6.2.7/tippy.css","welcome_files/tippy-6.2.7/tippy.umd.min.js","welcome_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["library.bib","plot2.csv","welcome_files/figure-html5/unnamed-chunk-4-1.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2043,6 +2052,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!--/radix_placeholder_distill-->
   <script src="../../site_libs/header-attrs-2.7/header-attrs.js"></script>
+  <link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+  <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
   <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
@@ -2077,6 +2088,12 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="nav-right">
 <a href="../../index.html">Home</a>
 <a href="../../about.html">About</a>
+<a href="http://twitter.com/JonGretar">
+<i class="fa fa-twitter" aria-hidden="true"></i>
+</a>
+<a href="http://github.com/JonGretar">
+<i class="fa fa-github" aria-hidden="true"></i>
+</a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
 </nav>
@@ -2094,9 +2111,85 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <div class="d-article">
-<p>Distill is a publication format for scientific and technical writing, native to the web.</p>
-<p>Learn more about using Distill at <a href="https://rstudio.github.io/distill" class="uri">https://rstudio.github.io/distill</a>.</p>
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#first-post">First post</a></li>
+<li><a href="#why-distill">Why Distill?</a></li>
+<li><a href="#working-with-data">Working with data</a></li>
+<li><a href="#math-with-r">Math with R</a></li>
+</ul>
+</nav>
+</div>
+<h2 id="first-post">First post</h2>
+<p>This is just a demo post. The idea is to test the capabilities of <a href="https://rstudio.github.io/distill">Distill</a> as a blogging platform.</p>
+<h2 id="why-distill">Why Distill?</h2>
+<p>As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article <em>Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry</em> <span class="citation" data-cites="arnórsnorrason2006">(<a href="#ref-arnórsnorrason2006" role="doc-biblioref">Arnór Snorrason and Stefán Freyr Einarsson 2006</a>)</span>.</p>
+<h2 id="working-with-data">Working with data</h2>
+<p>For example we have the following data that I would like to work with.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["tree"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["stofn"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["species"],"name":[3],"type":["chr"],"align":["left"]},{"label":["diam1"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["diam2"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["height_measured"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"RG","4":"5.0","5":"5.1","6":"NA"},{"1":"2","2":"2","3":"RG","4":"14.7","5":"14.6","6":"8.38"},{"1":"3","2":"3","3":"RG","4":"12.7","5":"13.4","6":"NA"},{"1":"4","2":"4","3":"RG","4":"13.2","5":"13.8","6":"8.66"},{"1":"5","2":"5","3":"RG","4":"4.5","5":"4.7","6":"NA"},{"1":"6","2":"6","3":"RG","4":"10.3","5":"10.8","6":"NA"},{"1":"7","2":"7","3":"RG","4":"5.0","5":"4.0","6":"4.65"},{"1":"8","2":"8","3":"RG","4":"12.0","5":"12.0","6":"NA"},{"1":"9","2":"9","3":"RG","4":"11.0","5":"11.3","6":"NA"},{"1":"10","2":"10","3":"RG","4":"4.5","5":"4.0","6":"NA"},{"1":"11","2":"11","3":"RG","4":"8.5","5":"8.2","6":"NA"},{"1":"12","2":"12","3":"RG","4":"9.8","5":"9.9","6":"NA"},{"1":"13","2":"13","3":"RG","4":"11.2","5":"11.5","6":"7.52"},{"1":"14","2":"14","3":"RG","4":"11.6","5":"11.3","6":"NA"},{"1":"15","2":"15","3":"RG","4":"6.4","5":"6.4","6":"NA"},{"1":"16","2":"16","3":"RG","4":"7.2","5":"6.7","6":"NA"},{"1":"17","2":"17","3":"RG","4":"9.0","5":"8.7","6":"NA"},{"1":"18","2":"18","3":"RG","4":"9.2","5":"9.2","6":"NA"},{"1":"19","2":"19","3":"RG","4":"7.5","5":"7.3","6":"NA"},{"1":"20","2":"20","3":"RG","4":"11.8","5":"11.6","6":"NA"},{"1":"21","2":"21","3":"RG","4":"8.2","5":"8.7","6":"NA"},{"1":"22","2":"22","3":"RG","4":"11.9","5":"11.8","6":"NA"},{"1":"23","2":"23","3":"RG","4":"8.7","5":"8.0","6":"NA"},{"1":"24","2":"24","3":"RG","4":"8.2","5":"8.2","6":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<p>First I would like to do basic manipulation of the data.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>trees</span><span class='op'>$</span><span class='va'>dbh</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='va'>trees</span><span class='op'>$</span><span class='va'>diam1</span> <span class='op'>+</span> <span class='va'>trees</span><span class='op'>$</span><span class='va'>diam2</span><span class='op'>)</span> <span class='op'>/</span> <span class='fl'>2</span>
+<span class='va'>trees</span><span class='op'>$</span><span class='va'>ba</span> <span class='op'>=</span> <span class='op'>(</span><span class='va'>trees</span><span class='op'>$</span><span class='va'>dbh</span><span class='op'>/</span><span class='fl'>200</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>*</span> <span class='va'>pi</span>
+</code></pre>
+</div>
+</div>
+<p>For the next trick we use linear regressions to calculate the expected height of the trees. We then use <code>coalesce()</code> to copy back the height we already knew. From there we can calculate the volume of each tree using the volume functions <span class="citation" data-cites="arnórsnorrason2006">(<a href="#ref-arnórsnorrason2006" role="doc-biblioref">Arnór Snorrason and Stefán Freyr Einarsson 2006</a>)</span>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>trees</span><span class='op'>$</span><span class='va'>height</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>height_measured</span> <span class='op'>~</span> <span class='va'>ba</span>, data<span class='op'>=</span><span class='va'>trees</span><span class='op'>)</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>trees</span><span class='op'>)</span>
+<span class='va'>trees</span><span class='op'>$</span><span class='va'>height</span> <span class='op'>&lt;-</span> <span class='fu'>coalesce</span><span class='op'>(</span><span class='va'>trees</span><span class='op'>$</span><span class='va'>height_measured</span>, <span class='va'>trees</span><span class='op'>$</span><span class='va'>height</span><span class='op'>)</span>
+
+<span class='va'>trees</span><span class='op'>$</span><span class='va'>v</span> <span class='op'>=</span> <span class='fl'>0.1299</span> <span class='op'>*</span> <span class='va'>trees</span><span class='op'>$</span><span class='va'>dbh</span><span class='op'>^</span><span class='fl'>1.6834</span> <span class='op'>*</span> <span class='va'>trees</span><span class='op'>$</span><span class='va'>height</span><span class='op'>^</span><span class='fl'>0.8598</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="welcome_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+</div>
+<h2 id="math-with-r">Math with R</h2>
+<p>Using LaTeX math symbols we can communicate mathematical functions in a nice manner. For example we can talk about BAL as described by Arne Pommerening’s excellent article <em><a href="https://blogg.slu.se/forest-biometrics/2017/05/26/basal-area-in-larger-trees-and-the-growth-compensation-point/">Basal area in larger trees and the growth compensation point</a></em> where he explains BAL as such:</p>
+<blockquote>
+<p><em>BAL</em> is related to available light, since with increasing basal area of larger trees there is less light available for smaller trees. In a sense <em>BAL</em> is a surrogate for light measurements with the benefit that stem diameters and basal area are easier to measure.</p>
+</blockquote>
+<p><span class="math display">\[BAL_i(t) = G(t) \cdot (1 - p_i(t)) \text{ where } p_i(t) = \frac{1}{G(t)} \sum_{\leq g_i(t)} g_i(t)\]</span></p>
+<p>He also give us an example function in R. Let us use it to calculate the BAL of individual trees in our example data.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>bal</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>ba</span>, <span class='va'>area</span><span class='op'>)</span> <span class='op'>{</span>
+ <span class='va'>sumba</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>ba</span><span class='op'>)</span>
+ <span class='va'>basmaller</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+ <span class='va'>pix</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+ <span class='va'>bal</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+ <span class='kw'>for</span> <span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>1</span> <span class='op'>:</span> <span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span><span class='op'>(</span><span class='va'>ba</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
+   <span class='va'>bax</span> <span class='op'>&lt;-</span> <span class='va'>ba</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span>
+   <span class='va'>basmaller</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>ba</span><span class='op'>[</span><span class='va'>ba</span> <span class='op'>&lt;=</span> <span class='va'>bax</span><span class='op'>]</span><span class='op'>)</span>
+   <span class='va'>pix</span> <span class='op'>&lt;-</span> <span class='va'>basmaller</span> <span class='op'>/</span> <span class='va'>sumba</span>
+   <span class='va'>bal</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>sumba</span> <span class='op'>*</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>pix</span><span class='op'>)</span> <span class='op'>/</span> <span class='va'>area</span>
+ <span class='op'>}</span>
+ <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>bal</span><span class='op'>)</span>
+<span class='op'>}</span>
+<span class='co'># An then run it for out 0.54ha example stand.</span>
+<span class='va'>trees</span><span class='op'>$</span><span class='va'>bal</span> <span class='op'>&lt;-</span> <span class='fu'>bal</span><span class='op'>(</span><span class='va'>trees</span><span class='op'>$</span><span class='va'>ba</span>, <span class='fl'>0.54</span><span class='op'>/</span><span class='fl'>10000</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-arnórsnorrason2006" class="csl-entry" role="doc-biblioentry">
+Arnór Snorrason, and Stefán Freyr Einarsson. 2006. <span>“Single-Tree Biomass and Stem Volume Functions for Eleven Tree Species Used in Icelandic Forestry.”</span> <em>Icelandic Agricultural Sciences</em>, 15–24. <a href="https://www.semanticscholar.org/paper/Single-tree-biomass-and-stem-volume-functions-for-Snorrason-Einarsson/6668a0d8e81f7c32c0a0926d99b3451c9c69c160">https://www.semanticscholar.org/paper/Single-tree-biomass-and-stem-volume-functions-for-Snorrason-Einarsson/6668a0d8e81f7c32c0a0926d99b3451c9c69c160</a>.
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2104,11 +2197,25 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
+<div class="appendix-bottom">
+  <h3 id="references">References</h3>
+  <div id="references-listing"></div>
+  <h3 id="updates-and-corrections">Corrections</h3>
+  <p>If you see mistakes or want to suggest changes, please <a href="https://github.com/JonGretar/JonGretar.github.io/issues/new">create an issue</a> on the source repository.</p>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->
