@@ -23,6 +23,7 @@
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
@@ -100,7 +101,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="This is just a demo post. The idea is to test the capabilities of Distill as a blogging platform. In this post I am just trying out a few capabilities of Distill and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here."/>
 <meta property="og:url" content="http://jongretar.com/posts/2021-04-25-welcome/"/>
-<meta property="og:image" content="http://jongretar.com/posts/2021-04-25-welcome/welcome_files/figure-html5/unnamed-chunk-4-1.png"/>
+<meta property="og:image" content="http://jongretar.com/posts/2021-04-25-welcome/welcome_files/figure-html5/regression_plot-1.png"/>
 <meta property="og:image:width" content="1248"/>
 <meta property="og:image:height" content="768"/>
 <meta property="og:locale" content="en_US"/>
@@ -111,7 +112,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="twitter:title" content="Jón Grétar: First Distill post"/>
 <meta property="twitter:description" content="This is just a demo post. The idea is to test the capabilities of Distill as a blogging platform. In this post I am just trying out a few capabilities of Distill and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here."/>
 <meta property="twitter:url" content="http://jongretar.com/posts/2021-04-25-welcome/"/>
-<meta property="twitter:image" content="http://jongretar.com/posts/2021-04-25-welcome/welcome_files/figure-html5/unnamed-chunk-4-1.png"/>
+<meta property="twitter:image" content="http://jongretar.com/posts/2021-04-25-welcome/welcome_files/figure-html5/regression_plot-1.png"/>
 <meta property="twitter:image:width" content="1248"/>
 <meta property="twitter:image:height" content="768"/>
 <meta property="twitter:site" content="@JonGretar"/>
@@ -127,7 +128,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["library.bib","plot2.csv","welcome_files/anchor-4.2.2/anchor.min.js","welcome_files/bowser-1.9.3/bowser.min.js","welcome_files/distill-2.2.21/template.v2.js","welcome_files/figure-html5/unnamed-chunk-4-1.png","welcome_files/header-attrs-2.7/header-attrs.js","welcome_files/jquery-1.11.3/jquery.min.js","welcome_files/pagedtable-1.1/css/pagedtable.css","welcome_files/pagedtable-1.1/js/pagedtable.js","welcome_files/popper-2.6.0/popper.min.js","welcome_files/tippy-6.2.7/tippy-bundle.umd.min.js","welcome_files/tippy-6.2.7/tippy-light-border.css","welcome_files/tippy-6.2.7/tippy.css","welcome_files/tippy-6.2.7/tippy.umd.min.js","welcome_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["library.bib","plot2.csv","welcome_files/anchor-4.2.2/anchor.min.js","welcome_files/bowser-1.9.3/bowser.min.js","welcome_files/distill-2.2.21/template.v2.js","welcome_files/figure-html5/regression_plot-1.png","welcome_files/figure-html5/unnamed-chunk-4-1.png","welcome_files/header-attrs-2.11/header-attrs.js","welcome_files/jquery-3.6.0/jquery-3.6.0.js","welcome_files/jquery-3.6.0/jquery-3.6.0.min.js","welcome_files/jquery-3.6.0/jquery-3.6.0.min.map","welcome_files/pagedtable-1.1/css/pagedtable.css","welcome_files/pagedtable-1.1/js/pagedtable.js","welcome_files/popper-2.6.0/popper.min.js","welcome_files/tippy-6.2.7/tippy-bundle.umd.min.js","welcome_files/tippy-6.2.7/tippy-light-border.css","welcome_files/tippy-6.2.7/tippy.css","welcome_files/tippy-6.2.7/tippy.umd.min.js","welcome_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -473,7 +474,7 @@ d-title {
 
 </style>
 
-<script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <link href="../../site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet"/>
 <link href="../../site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet"/>
 <script src="../../site_libs/headroom-0.9.4/headroom.min.js"></script>
@@ -2051,10 +2052,10 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <!--/radix_placeholder_distill-->
-  <script src="../../site_libs/header-attrs-2.7/header-attrs.js"></script>
+  <script src="../../site_libs/header-attrs-2.11/header-attrs.js"></script>
   <link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
   <script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-  <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
+  <script src="../../site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
   <script src="../../site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="../../site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="../../site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2153,7 +2154,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 <div class="layout-chunk" data-layout="l-body">
-<p><img src="welcome_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
+<p><img src="welcome_files/figure-html5/regression_plot-1.png" width="624" /></p>
 </div>
 <h2 id="math-with-r">Math with R</h2>
 <p>Using LaTeX math symbols we can communicate mathematical functions in a nice manner. For example we can talk about BAL as described by Arne Pommerening’s excellent article <em><a href="https://blogg.slu.se/forest-biometrics/2017/05/26/basal-area-in-larger-trees-and-the-growth-compensation-point/">Basal area in larger trees and the growth compensation point</a></em> where he explains BAL as such:</p>

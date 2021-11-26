@@ -17,10 +17,8 @@ library(tidyverse)
 library(knitr)
 library(rmarkdown)
 library(ggpubr)
-library(ggthemr)
+library(hrbrthemes)
 library(gtsummary)
-
-ggthemr("flat")
 
 trees <- read_delim("plot2.csv", ";", 
      escape_double = FALSE, locale = locale(decimal_mark = ",", 
@@ -59,14 +57,15 @@ trees$v = 0.1299 * trees$dbh^1.6834 * trees$height^0.8598
 ```
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r regression_plot, echo=FALSE, message=FALSE, warning=FALSE}
 trees  %>% ggplot(aes(dbh, height_measured)) + 
   geom_point() +
   geom_smooth(method=lm) +
   stat_regline_equation() +
   stat_cor(label.y = 9, aes(label=..rr.label..)) +
   labs(x="DBH (cm)", y="Height (m)") +
-  ggtitle("Regression of height")
+  ggtitle("Regression of height") +
+  theme_ipsum_rc()
 ```
 
 ## Math with R
