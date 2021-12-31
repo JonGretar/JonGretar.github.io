@@ -27,7 +27,7 @@ trees <- read_delim("plot2.csv", ";",
 
 ## Why Distill?
 
-There are a few reasins for why I would like to try [Distill](https://rstudio.github.io/distill) as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article *Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry* [@arnórsnorrason2006].
+There are a few reasons for why I would like to try [Distill](https://rstudio.github.io/distill) as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article *Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry* [@arnórsnorrason2006].
 
 Other reasons are the capabilities of working with the data right in the blogging system and creating the charts and tables in the same area as I write the post.
 
@@ -43,7 +43,7 @@ First I would like to do basic manipulation of the data.
 
 ```{r}
 trees$dbh <- (trees$diam1 + trees$diam2) / 2
-trees$ba = (trees$dbh/200)^2 * pi
+trees$ba <- (trees$dbh/200)^2 * pi
 ```
 
 For the next trick we use linear regressions to calculate the expected height of the trees. We then use `coalesce()` to copy back the height we already knew. From there we can calculate the volume of each tree using the volume functions [@arnórsnorrason2006].
@@ -53,12 +53,12 @@ trees$height <- lm(height_measured ~ ba, data=trees) %>%
   predict(trees)
 trees$height <- coalesce(trees$height_measured, trees$height)
 
-trees$v = 0.1299 * trees$dbh^1.6834 * trees$height^0.8598
+trees$v <- 0.1299 * trees$dbh^1.6834 * trees$height^0.8598
 ```
 
 
 ```{r regression_plot, echo=FALSE, message=FALSE, warning=FALSE}
-trees  %>% ggplot(aes(dbh, height_measured)) + 
+trees |> ggplot(aes(dbh, height_measured)) + 
   geom_point() +
   geom_smooth(method=lm) +
   stat_regline_equation() +
