@@ -56,7 +56,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 code span.al { color: #ad0000; } /* Alert */
 code span.an { color: #5e5e5e; } /* Annotation */
-code span.at { color: #20794d; } /* Attribute */
+code span.at { } /* Attribute */
 code span.bn { color: #ad0000; } /* BaseN */
 code span.bu { } /* BuiltIn */
 code span.cf { color: #007ba5; } /* ControlFlow */
@@ -77,12 +77,34 @@ code span.kw { color: #007ba5; } /* Keyword */
 code span.op { color: #5e5e5e; } /* Operator */
 code span.ot { color: #007ba5; } /* Other */
 code span.pp { color: #ad0000; } /* Preprocessor */
-code span.sc { color: #20794d; } /* SpecialChar */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
 code span.ss { color: #20794d; } /* SpecialString */
 code span.st { color: #20794d; } /* String */
 code span.va { color: #111111; } /* Variable */
 code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
 </style>
 
   <!--radix_placeholder_meta_tags-->
@@ -123,7 +145,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","bibliography","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["First Distill post"]},{"type":"character","attributes":{},"value":["This is just a demo post. The idea is to test the capabilities of Distill as a blogging platform. In this post I am just trying out a few capabilities of Distill and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here."]},{"type":"character","attributes":{},"value":["04-25-2021"]},{"type":"character","attributes":{},"value":["library.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["http://jongretar.com/posts/2021-04-25-welcome/"]},{"type":"character","attributes":{},"value":["http://jongretar.com/posts/2021-04-25-welcome/"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","bibliography","categories","output","citation_url","canonical_url"]}},"value":[{"type":"character","attributes":{},"value":["First Distill post"]},{"type":"character","attributes":{},"value":["This is just a demo post. The idea is to test the capabilities of Distill as a blogging platform. In this post I am just trying out a few capabilities of Distill and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here."]},{"type":"character","attributes":{},"value":["04-25-2021"]},{"type":"character","attributes":{},"value":["library.bib"]},{"type":"character","attributes":{},"value":["Distill"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_float"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"logical","attributes":{},"value":[true]}]}]},{"type":"character","attributes":{},"value":["http://jongretar.com/posts/2021-04-25-welcome/"]},{"type":"character","attributes":{},"value":["http://jongretar.com/posts/2021-04-25-welcome/"]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -1881,7 +1903,10 @@ function init_distill() {
 
     // hoverable references
     $('span.citation[data-cites]').each(function() {
-      var refHtml = $('#ref-' + $(this).attr('data-cites')).html();
+      var refs = $(this).attr('data-cites').split(" ");
+      var refHtml = refs.map(function(ref) {
+        return "<p>" + $('#ref-' + ref).html() + "</p>";
+      }).join("\n");
       window.tippy(this, {
         allowHTML: true,
         content: refHtml,
@@ -2418,6 +2443,9 @@ d-appendix d-footnote-list a.footnote-backlink {
 <div class="d-title">
 <h1>First Distill post</h1>
 <!--radix_placeholder_categories-->
+<div class="dt-tags">
+  <a href="../../index.html#category:Distill" class="dt-tag">Distill</a>
+</div>
 <!--/radix_placeholder_categories-->
 <p><p>This is just a demo post. The idea is to test the capabilities of Distill as a blogging platform. In this post I am just trying out a few capabilities of Distill and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here.</p></p>
 </div>
@@ -2435,7 +2463,7 @@ d-appendix d-footnote-list a.footnote-backlink {
 </nav>
 </div>
 <h2 id="why-distill">Why Distill?</h2>
-<p>There are a few reasons for why I would like to try <a href="https://rstudio.github.io/distill">Distill</a> as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article <em>Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry</em> <span class="citation" data-cites="arnórsnorrason2006">(<a href="#ref-arnórsnorrason2006" role="doc-biblioref">Arnór Snorrason and Stefán Freyr Einarsson 2006</a>)</span>.</p>
+<p>There are a few reasons for why I would like to try <a href="https://rstudio.github.io/distill">Distill</a> <span class="citation" data-cites="distill2021">(<a href="#ref-distill2021" role="doc-biblioref">Allaire et al. 2021</a>)</span> as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article <em>Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry</em> <span class="citation" data-cites="arnórsnorrason2006">(<a href="#ref-arnórsnorrason2006" role="doc-biblioref">Arnór Snorrason and Stefán Freyr Einarsson 2006</a>)</span>.</p>
 <p>Other reasons are the capabilities of working with the data right in the blogging system and creating the charts and tables in the same area as I write the post.</p>
 <h2 id="working-with-data">Working with data</h2>
 <p>For example we have the following data that I would like to work with.</p>
@@ -2497,6 +2525,9 @@ d-appendix d-footnote-list a.footnote-backlink {
 </div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-distill2021" class="csl-entry" role="doc-biblioentry">
+Allaire, JJ, Rich Iannone, Alison Presmanes Hill, and Yihui Xie. 2021. <em>Distill: ’R Markdown’ Format for Scientific and Technical Writing</em>. <a href="https://CRAN.R-project.org/package=distill">https://CRAN.R-project.org/package=distill</a>.
+</div>
 <div id="ref-arnórsnorrason2006" class="csl-entry" role="doc-biblioentry">
 Arnór Snorrason, and Stefán Freyr Einarsson. 2006. <span>“Single-Tree Biomass and Stem Volume Functions for Eleven Tree Species Used in Icelandic Forestry.”</span> <em>Icelandic Agricultural Sciences</em>, 15–24. <a href="https://www.semanticscholar.org/paper/Single-tree-biomass-and-stem-volume-functions-for-Snorrason-Einarsson/6668a0d8e81f7c32c0a0926d99b3451c9c69c160">https://www.semanticscholar.org/paper/Single-tree-biomass-and-stem-volume-functions-for-Snorrason-Einarsson/6668a0d8e81f7c32c0a0926d99b3451c9c69c160</a>.
 </div>

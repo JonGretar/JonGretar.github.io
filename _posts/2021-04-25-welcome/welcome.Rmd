@@ -4,6 +4,8 @@ description: |
   This is just a demo post. The idea is to test the capabilities of Distill as a blogging platform. In this post I am just trying out a few capabilities of Distill and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here.
 date: 04-25-2021
 bibliography: library.bib
+categories:
+  - Distill
 output:
   distill::distill_article:
     self_contained: false
@@ -27,7 +29,7 @@ trees <- read_delim("plot2.csv", ";",
 
 ## Why Distill?
 
-There are a few reasons for why I would like to try [Distill](https://rstudio.github.io/distill) as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article *Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry* [@arnórsnorrason2006].
+There are a few reasons for why I would like to try [Distill](https://rstudio.github.io/distill) [@distill2021] as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article *Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry* [@arnórsnorrason2006].
 
 Other reasons are the capabilities of working with the data right in the blogging system and creating the charts and tables in the same area as I write the post.
 
