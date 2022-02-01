@@ -2402,7 +2402,7 @@ function init_posts_list() {
     var src = $(img).attr('data-src');
     if (src) {
       $(img).attr('src', src);
-      $(img).load(function() {
+      $(img).on("load", function() {
         img.removeAttribute('data-src');
       });
     }
@@ -2448,6 +2448,7 @@ function init_posts_list() {
 
       // mark posts that match the category visible
       var page_category = window.location.hash.replace(/^#category:/, "");
+      page_category = decodeURIComponent(page_category)
       var posts = $('.post-metadata').map(function(idx, script) {
         var metadata = $.parseJSON($(script).html());
         var post = null;
@@ -2463,7 +2464,7 @@ function init_posts_list() {
       set_posts_visible(posts, true);
 
       // mark the hash active
-      $('.categories li>a[href="' + window.location.hash + '"]').addClass('active');
+      $('.categories li>a[href="' + decodeURIComponent(window.location.hash) + '"]').addClass('active');
 
       // update the list_caption
       var list_caption = $('.posts-list-caption');
@@ -2523,11 +2524,54 @@ function init_posts_list() {
 
 
 
-<div class="posts-container posts-apply-limit l-page">
+<div class="posts-container posts-with-sidebar posts-apply-limit l-screen-inset">
 <div class="posts-list">
 <h1 class="posts-list-caption" data-caption="Articles">Articles</h1>
+<a href="posts/2022-01-10-forests-of-europe/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","TidyTuesday","Forestry","GIS"]}</script>
+<div class="metadata">
+<div class="publishedDate">Jan. 10, 2022</div>
+<div class="dt-authors"></div>
+</div>
+<div class="thumbnail">
+<img src="posts/2022-01-10-forests-of-europe/forests-of-europe_files/figure-html5/map_final-1.png"/>
+</div>
+<div class="description">
+<h2>Forests of Europe</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">TidyTuesday</div>
+<div class="dt-tag">Forestry</div>
+<div class="dt-tag">GIS</div>
+</div>
+<p>In this post I wish to continue a little bit with the TidyTuesday deforestation
+data I worked with in the last post. The inspiration came from wanting to get 
+my hands dirty with map data and the sf package.</p>
+</div>
+</a>
+<a href="posts/2021-12-20-deforestation/" class="post-preview">
+<script class="post-metadata" type="text/json">{"categories":["R","TidyTuesday","Forestry"]}</script>
+<div class="metadata">
+<div class="publishedDate">Dec. 20, 2021</div>
+<div class="dt-authors"></div>
+</div>
+<div class="thumbnail">
+<img src="posts/2021-12-20-deforestation/deforestation_files/figure-html5/forest-changes-1.png"/>
+</div>
+<div class="description">
+<h2>Deforestation</h2>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">TidyTuesday</div>
+<div class="dt-tag">Forestry</div>
+</div>
+<p>TidyTuesday is a weekly community event where many participants in the R 
+ecosystem join together to visualize a dataset. I decided to begin with an
+older dataset from week 15 of 2021 that focuses on deforestation.</p>
+</div>
+</a>
 <a href="posts/2021-04-25-welcome/" class="post-preview">
-<script class="post-metadata" type="text/json">{"categories":[]}</script>
+<script class="post-metadata" type="text/json">{"categories":["R","Distill"]}</script>
 <div class="metadata">
 <div class="publishedDate">April 25, 2021</div>
 <div class="dt-authors"></div>
@@ -2537,10 +2581,44 @@ function init_posts_list() {
 </div>
 <div class="description">
 <h2>First Distill post</h2>
-<div class="dt-tags"></div>
+<div class="dt-tags">
+<div class="dt-tag">R</div>
+<div class="dt-tag">Distill</div>
+</div>
 <p>This is just a demo post. The idea is to test the capabilities of Distill as a blogging platform. In this post I am just trying out a few capabilities of Distill and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here.</p>
 </div>
 </a>
+</div>
+<div class="posts-sidebar">
+<div class="sidebar-section categories">
+<h3>Categories</h3>
+<ul>
+<li>
+<a href="#category:Articles">Articles</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:Distill">Distill</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:Forestry">Forestry</a>
+<span class="category-count">(2)</span>
+</li>
+<li>
+<a href="#category:GIS">GIS</a>
+<span class="category-count">(1)</span>
+</li>
+<li>
+<a href="#category:R">R</a>
+<span class="category-count">(3)</span>
+</li>
+<li>
+<a href="#category:TidyTuesday">TidyTuesday</a>
+<span class="category-count">(2)</span>
+</li>
+</ul>
+</div>
 </div>
 <div class="posts-more">
 <a href="#">More articles &raquo;</a>

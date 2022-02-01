@@ -5,6 +5,7 @@ description: |
 date: 04-25-2021
 bibliography: library.bib
 categories:
+  - R
   - Distill
 output:
   distill::distill_article:
