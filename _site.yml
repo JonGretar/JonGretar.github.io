@@ -18,4 +18,7 @@ navbar:
       href: "http://twitter.com/JonGretar"
     - icon: fa fa-github
       href: "http://github.com/JonGretar"
-output: distill::distill_article
+output: 
+  distill::distill_article:
+    includes:
+      in_header: _includes/header.html
