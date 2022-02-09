@@ -78,3 +78,15 @@ d-appendix {
 /*-- Additional custom styles --*/
 /* Add any additional CSS rules below                      */
 
+.d-title {
+  background-color: #EFEFF8;
+  border-bottom: 1px dotted #333;
+}
+
+.sourceCode {
+  overflow: auto !important;
+  padding-left: 18px;
+  padding-top: 6px;
+  padding-right: 10px;
+  padding-bottom: 6px;
+}
