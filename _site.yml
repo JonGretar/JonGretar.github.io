@@ -9,11 +9,13 @@ twitter:
 base_url: "http://jongretar.com/"
 repository_url: https://github.com/JonGretar/JonGretar.github.io
 navbar:
-  right:
+  search: false
+  left:
     - text: "Home"
-      href: index.html
+      href: /
     - text: "About"
       href: about.html
+  right:
     - icon: fa fa-twitter
       href: "http://twitter.com/JonGretar"
     - icon: fa fa-github
