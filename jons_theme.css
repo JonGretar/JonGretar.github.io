@@ -83,7 +83,8 @@ d-appendix {
   border-bottom: 1px dotted #333;
 }
 
-.sourceCode {
+div.sourceCode pre {
+  background-color: #EFEFF8;
   overflow: auto !important;
   padding-left: 18px;
   padding-top: 6px;
