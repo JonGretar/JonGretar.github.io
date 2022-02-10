@@ -2236,7 +2236,29 @@ d-appendix {
 
 /*-- Additional custom styles --*/
 /* Add any additional CSS rules below                      */
-</style>
+
+.d-title {
+  background-color: #EFEFF8;
+  border-bottom: 1px dotted #333;
+}
+
+
+div.sourceCode pre {
+  background-color: #EFEFF8;
+  overflow: auto !important;
+  padding-left: 18px;
+  padding-top: 6px;
+  padding-right: 10px;
+  padding-bottom: 6px;
+}
+.sourceCode { overflow: auto !important; }
+@media(min-width: 768px) {
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto !important;
+  }
+}</style>
 <style type="text/css">
 /* base style */
 
@@ -2406,6 +2428,38 @@ d-appendix d-footnote-list a.footnote-backlink {
   <script src="../../site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
 <script async defer src="https://beampipe.io/js/tracker.js" data-beampipe-domain="jongretar.com"></script>
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+     if (!/posts/.test(location.pathname)) {
+       return;
+     }
+
+     var script = document.createElement("script");
+     script.src = "https://giscus.app/client.js";
+     script.setAttribute("data-repo", "JonGretar/JonGretar.github.io");
+     script.setAttribute("data-repo-id", "MDEwOlJlcG9zaXRvcnkzNjE1NDczMDI=");
+     script.setAttribute("data-category", "BlogComments");
+     script.setAttribute("data-category-id", "DIC_kwDOFYzGJs4CBFLC");
+     script.setAttribute("data-mapping", "pathname");
+     script.setAttribute("data-reactions-enabled", "0");
+     script.setAttribute("data-emit-metadata", "0");
+     script.setAttribute("data-theme", "light");
+     script.setAttribute("data-lang", "en");
+
+     /* wait for article to load, append script to article element */
+     var observer = new MutationObserver(function (mutations, observer) {
+       var article = document.querySelector("d-article");
+       if (article) {
+         observer.disconnect();
+         /* HACK: article scroll */
+         article.setAttribute("style", "overflow-y: hidden");
+         article.appendChild(script);
+       }
+     });
+
+     observer.observe(document.body, { childList: true });
+   });
+ </script>
 <!--/radix_placeholder_site_in_header-->
 
 
