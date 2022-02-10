@@ -2,18 +2,18 @@
   "articles": [
     {
       "path": "about.html",
-      "title": "About Me",
-      "description": "Soma basic info about me",
+      "title": "Jón Grétar Borgþórsson",
+      "description": "Some basic info about me",
       "author": [],
-      "contents": "\n\n          \n          \n          Jón Grétar\n          Home\n          About\n          \n          \n          \n          \n          \n          \n          \n          \n          ☰\n          \n          \n      \n        \n          \n            About Me\n          \n          \n            \n              Old dev and a forestry student focusing on forest biometrics.\n              Tech Interests: Elixir, RStats, GIS, SmartOS\n            \n            \n              Old dev and a forestry student focusing on forest biometrics.\n              Tech Interests: Elixir, RStats, GIS, SmartOS\n            \n          \n\n          \n            \n              \n                  \n                    \n                      GitHub\n                    \n                  \n                \n                                \n                  \n                    \n                      Twitter\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    GitHub\n                  \n                \n                                \n                  \n                    Twitter\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
-      "last_modified": "2022-02-10T20:43:02+00:00"
+      "contents": "\n\n          \n          \n          Jón Grétar\n          Home\n          About\n          \n          \n          \n          \n          \n          \n          \n          \n          ☰\n          \n          \n      \n        \n          \n            Jón Grétar Borgþórsson\n          \n          \n            \n              \n              Old dev and a forestry student focusing on forest biometrics.\n              \n              Tech Interests: Elixir, RStats, GIS, SmartOS\n              \n              \n            \n            \n              \n              Old dev and a forestry student focusing on forest biometrics.\n              \n              Tech Interests: Elixir, RStats, GIS, SmartOS\n              \n              \n            \n          \n\n          \n            \n              \n                  \n                    \n                      GitHub\n                    \n                  \n                \n                                \n                  \n                    \n                      Twitter\n                    \n                  \n                \n                              \n          \n\n          \n            \n              \n                                \n                  \n                    GitHub\n                  \n                \n                                \n                  \n                    Twitter\n                  \n                \n                              \n            \n          \n        \n      \n    \n\n    \n    \n    ",
+      "last_modified": "2022-02-10T21:07:21+00:00"
     },
     {
       "path": "index.html",
       "title": "Articles",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2022-02-10T20:43:02+00:00"
+      "last_modified": "2022-02-10T20:58:17+00:00"
     }
   ],
   "collections": ["posts/posts.json"]

@@ -1,7 +1,7 @@
 ---
-title: "About Me"
+title: "Jón Grétar Borgþórsson"
 output:
-  postcards::jolla_blue
+  postcards::jolla
 image: "images/silouette-1.jpg"
 links:
   - label: GitHub
@@ -9,10 +9,12 @@ links:
   - label: Twitter
     url: "https://twitter/JonGretar"
 description: |
-  Soma basic info about me
+  Some basic info about me
 ---
 
 
-Old dev and a forestry student focusing on forest biometrics.
+#### *Old dev and a forestry student focusing on forest biometrics.*
 
-Tech Interests: Elixir, RStats, GIS, SmartOS
+---
+
+##### Tech Interests: Elixir, RStats, GIS, SmartOS
