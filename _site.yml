@@ -12,7 +12,7 @@ navbar:
   search: false
   left:
     - text: "Home"
-      href: /
+      href: http://jongretar.com
     - text: "About"
       href: about.html
   right:
