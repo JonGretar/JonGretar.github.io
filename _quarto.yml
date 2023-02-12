@@ -1,0 +1,31 @@
+project:
+  type: website
+  execute-dir: project
+  output-dir: docs
+
+website:
+  title: "Jón Grétar"
+  navbar:
+    left: 
+      - text: "Home"
+        file: index.qmd
+      - about.qmd
+    right:
+      - icon: github
+        href: https://github.com/
+      - icon: twitter
+        href: https://twitter.com/JonGretar
+      - icon: mastodon
+        href: https://fosstodon.org/@JonGretar
+format:
+  html:
+    include-in-header: 
+      file: _includes/header.html
+    theme: 
+      - flatly
+      - styles.css
+    code-block-bg: "#EFEFF8"
+    code-block-border-left: "#31BAE9"
+
+editor: visual
+

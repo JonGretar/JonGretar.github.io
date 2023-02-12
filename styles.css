@@ -1,0 +1,25 @@
+/* css styles */
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville');
+@import url('https://fonts.googleapis.com/css2?family=Inter');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code');
+
+
+/*-- scss:defaults --*/
+$font-family-sans-serif:    "Inter", sans-serif;
+$font-family-monospace:     "Fira Code", monospace;
+
+$navbar-bg: #EFEFF8;
+
+/*-- scss:rules --*/
+.navbar {
+  font-family:    "Libre Baskerville", sans-serif;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family:    "Libre Baskerville", sans-serif;
+}
+
+.quarto-title-banner {
+  background-color: #EFEFF8;
+  color: #111111;
+  border-bottom: 1px dotted #333;
+}

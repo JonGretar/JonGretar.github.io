@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2022-01-10">
+<meta name="description" content="In this post I wish to continue a little bit with the TidyTuesday deforestation data I worked with in the last post. The inspiration came from wanting to get my hands dirty with map data and the sf package.">
+
+<title>Jón Grétar - Forests of Europe</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script data-host="https://microanalytics.io" data-dnt="false" src="https://microanalytics.io/js/script.js" id="ZwSg9rf6GA" async="" defer=""></script>
+
+
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Jón Grétar</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html">
+ <span class="menu-text">About</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/JonGretar"><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@JonGretar"><i class="bi bi-mastodon" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+              <div id="quarto-search" class="" title="Search"></div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Forests of Europe</h1>
+                  <div>
+        <div class="description">
+          <p>In this post I wish to continue a little bit with the TidyTuesday deforestation data I worked with in the last post. The inspiration came from wanting to get my hands dirty with map data and the sf package.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">TidyTuesday</div>
+                <div class="quarto-category">Forestry</div>
+                <div class="quarto-category">GIS</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">January 10, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#themeing" id="toc-themeing" class="nav-link active" data-scroll-target="#themeing">Themeing</a></li>
+  <li><a href="#the-map-data" id="toc-the-map-data" class="nav-link" data-scroll-target="#the-map-data">The map data</a></li>
+  <li><a href="#deforestation-data" id="toc-deforestation-data" class="nav-link" data-scroll-target="#deforestation-data">Deforestation data</a></li>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together">Putting it all together</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>For this graph I wish to recreate a version of this excellent <a href="https://github.com/davidsjoberg/ggbump#sigmoid-curves-examples">example map</a> from the ggbump<span class="citation" data-cites="ggbump">(<a href="#ref-ggbump" role="doc-biblioref">Sjoberg 2020</a>)</span> package. I find it to be a wonderful example of using maps in data science and it is a great way to learn to use a few nice tricks in plot generation in ggplot. It would also be my entry into the world of using R for geographic data and an excellent use of the Deforestation<span class="citation" data-cites="deforestation2021">(<a href="#ref-deforestation2021" role="doc-biblioref">Ritchie and Roser 2021</a>)</span> dataset from TidyTuesday.</p>
+<p><img src="ranking_gdpr.png" class="img-fluid" alt="GDPR fines per capita © David Sjoberg"> The trick to generating this kind of chart is to play around with the coordinate system. We need to transfer the bar generation into the latitude and the longitude of of the map. I guess we could do it the other way and move the map coordinates to the coordinates of a column chart but when working with map data it seems to be far simpler to move everything else into their domain.</p>
+<section id="themeing" class="level2">
+<h2 class="anchored" data-anchor-id="themeing">Themeing</h2>
+<p>Before we get into the map itself I wish to start by generating the theme separately so we don’t have to repeat it all over the code. I tend to separate the theme from the plots a lot when I am repeating similar charts over a document.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>theme_deforestation <span class="ot">=</span> <span class="cf">function</span>() {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.margin =</span> <span class="fu">margin</span>(.<span class="dv">5</span>, <span class="dv">1</span>, .<span class="dv">5</span>, .<span class="dv">5</span>, <span class="st">"cm"</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"lightblue1"</span>),</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Roboto Condensed"</span>, <span class="at">size =</span> <span class="dv">18</span>, <span class="at">hjust=</span><span class="fl">0.5</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Roboto Condensed"</span>, <span class="at">size =</span> <span class="dv">6</span>),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.y.left =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x.bottom =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">text=</span><span class="fu">element_text</span>(<span class="at">family =</span> <span class="st">"Roboto Condensed"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="the-map-data" class="level2">
+<h2 class="anchored" data-anchor-id="the-map-data">The map data</h2>
+<p>First step is the use the <code>world</code> dataset from the spData<span class="citation" data-cites="spData">(<a href="#ref-spData" role="doc-biblioref">Bivand, Nowosad, and Lovelace 2021</a>)</span> package to get a basic map of the world that we then filter to the European countries. We also exclude Russia as the dataset does not tell us how much of the forest in Russia is located inside Europe.</p>
+<p>We then use the <code>st_crop()</code> function from the sf<span class="citation" data-cites="sf">(<a href="#ref-sf" role="doc-biblioref">Pebesma 2018</a>)</span> package to crop the chart to the area we wish to view. Then using <code>geom_sf</code> we render this chart in ggplot2.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>map <span class="ot">&lt;-</span> world <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Europe"</span>, iso_a2 <span class="sc">!=</span> <span class="st">"RU"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_crop</span>(<span class="at">xmin =</span> <span class="sc">-</span><span class="dv">24</span>, <span class="at">xmax =</span> <span class="dv">40</span>, <span class="at">ymin =</span> <span class="dv">33</span>, <span class="at">ymax =</span> <span class="dv">74</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>map, <span class="at">color=</span><span class="st">"lightblue1"</span>, <span class="at">fill=</span><span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_deforestation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>So far so good. Next we need to convert those polygons into their centroid points so we have something to link to when we create the path from the countries to their corresponding bar labels. For that we use the <code>st_point_on_surface()</code> function to pull the data into sf points and then use <code>st_coordinates()</code> to convert those geometries to X and Y vectors. We then retrieve the country names back from the original dataset and plot the points on top of the map.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>points <span class="ot">&lt;-</span> map <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_point_on_surface</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">st_coordinates</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>( <span class="at">country =</span> map<span class="sc">$</span>name_long )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"12.220766","2":"64.63653","3":"Norway"},{"1":"2.099228","2":"46.89507","3":"France"},{"1":"14.786243","2":"62.27488","3":"Sweden"},{"1":"27.786411","2":"53.70604","3":"Belarus"},{"1":"30.980755","2":"48.80461","3":"Ukraine"},{"1":"19.076267","2":"51.88442","3":"Poland"},{"1":"14.953150","2":"47.91918","3":"Austria"},{"1":"19.103248","2":"47.24520","3":"Hungary"},{"1":"28.649038","2":"47.13761","3":"Moldova"},{"1":"24.211692","2":"46.03603","3":"Romania"},{"1":"24.127801","2":"55.09124","3":"Lithuania"},{"1":"24.504423","2":"56.89505","3":"Latvia"},{"1":"25.561749","2":"58.49808","3":"Estonia"},{"1":"10.432351","2":"51.43123","3":"Germany"},{"1":"25.138533","2":"42.73942","3":"Bulgaria"},{"1":"21.806332","2":"39.08046","3":"Greece"},{"1":"19.967590","2":"41.24790","3":"Albania"},{"1":"15.583559","2":"44.54481","3":"Croatia"},{"1":"8.286516","2":"46.80966","3":"Switzerland"},{"1":"5.964413","2":"49.71585","3":"Luxembourg"},{"1":"4.737356","2":"50.57968","3":"Belgium"},{"1":"5.398113","2":"52.04023","3":"Netherlands"},{"1":"-8.367926","2":"39.51082","3":"Portugal"},{"1":"-3.444354","2":"40.15423","3":"Spain"},{"1":"-7.806699","2":"53.51036","3":"Ireland"},{"1":"12.631183","2":"42.55822","3":"Italy"},{"1":"9.460777","2":"56.32431","3":"Denmark"},{"1":"-1.753312","2":"54.22469","3":"United Kingdom"},{"1":"-18.457893","2":"64.98805","3":"Iceland"},{"1":"14.732281","2":"46.12744","3":"Slovenia"},{"1":"27.373290","2":"65.03005","3":"Finland"},{"1":"19.630114","2":"48.71194","3":"Slovakia"},{"1":"15.538166","2":"49.75827","3":"Czech Republic"},{"1":"18.115160","2":"43.85310","3":"Bosnia and Herzegovina"},{"1":"21.720351","2":"41.68110","3":"Macedonia"},{"1":"21.013475","2":"44.13670","3":"Serbia"},{"1":"19.396216","2":"42.75050","3":"Montenegro"},{"1":"20.913665","2":"42.51393","3":"Kosovo"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(points) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>map, <span class="at">color=</span><span class="st">"lightblue1"</span>, <span class="at">fill=</span><span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y)) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y, <span class="at">label=</span>country), </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">hjust=</span><span class="dv">0</span>, <span class="at">nudge_x=</span><span class="dv">1</span>, <span class="at">check_overlap=</span><span class="cn">TRUE</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_deforestation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="deforestation-data" class="level2">
+<h2 class="anchored" data-anchor-id="deforestation-data">Deforestation data</h2>
+<p>Next up us to get the data from the deforestation dataset. We choose the year 2020 and convert the percentage of world cover to millions of hectare. There is an estimate of 4.06 billion hectares of forests in the world.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>forest_area <span class="ot">&lt;-</span> </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  tuesdata<span class="sc">$</span>forest_area <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">2020</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">forest_ha =</span> <span class="dv">4200000000</span> <span class="sc">*</span> (forest_area<span class="sc">/</span><span class="dv">100</span>) <span class="sc">/</span> <span class="dv">1000000</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(entity, forest_ha)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="putting-it-all-together" class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-all-together">Putting it all together</h2>
+<p>Now to the fun part. We join the forest_area and the point datasets. We then need to use the <code>data_rescale()</code> function from the datawizard package<span class="citation" data-cites="datawizard">(<a href="#ref-datawizard" role="doc-biblioref">Makowski et al. 2021</a>)</span> to convert the data to make coordinates on the plot.</p>
+<p>For the y position we rank the rows by forest area and feed rescale the rank to fit between 40 and 70 giving us the y position of lines.</p>
+<p>For the x positions of the columns we choose to start at 55 and then rescale the forest area data to range between 55 and 130. We also need to define the old range to start at 0 as otherwise we will rescale the lowest ha number to 55.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>line_data <span class="ot">&lt;-</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  points <span class="sc">|&gt;</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(forest_area, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"country"</span> <span class="ot">=</span> <span class="st">"entity"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(forest_ha, <span class="at">n=</span><span class="dv">15</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_y =</span> <span class="fu">rank</span>(forest_ha) <span class="sc">|&gt;</span> <span class="fu">data_rescale</span>(<span class="at">to=</span><span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">70</span>)),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sigmoid_end =</span> <span class="dv">52</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_x_start =</span> <span class="dv">55</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_x_end =</span> forest_ha <span class="sc">|&gt;</span> <span class="fu">data_rescale</span>(<span class="at">to=</span><span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">130</span>), <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(forest_ha))),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">area_label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(forest_ha, <span class="dv">1</span>), <span class="st">" million ha"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>line_data <span class="sc">|&gt;</span> <span class="fu">paged_table</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["X"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Y"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["country"],"name":[3],"type":["chr"],"align":["left"]},{"label":["forest_ha"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["col_y"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["sigmoid_end"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["col_x_start"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["col_x_end"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["area_label"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"14.786243","2":"62.27488","3":"Sweden","4":"28.952431","5":"70.00000","6":"52","7":"55","8":"130.00000","9":"29 million ha"},{"1":"27.373290","2":"65.03005","3":"Finland","4":"23.187813","5":"67.85714","6":"52","7":"55","8":"115.06701","9":"23.2 million ha"},{"1":"-3.444354","2":"40.15423","3":"Spain","4":"19.217636","5":"65.71429","6":"52","7":"55","8":"104.78244","9":"19.2 million ha"},{"1":"2.099228","2":"46.89507","3":"France","4":"17.852619","5":"63.57143","6":"52","7":"55","8":"101.24643","9":"17.9 million ha"},{"1":"12.220766","2":"64.63653","3":"Norway","4":"12.603310","5":"61.42857","6":"52","7":"55","8":"87.64832","9":"12.6 million ha"},{"1":"10.432351","2":"51.43123","3":"Germany","4":"11.815862","5":"59.28571","6":"52","7":"55","8":"85.60847","9":"11.8 million ha"},{"1":"30.980755","2":"48.80461","3":"Ukraine","4":"10.026771","5":"57.14286","6":"52","7":"55","8":"80.97391","9":"10 million ha"},{"1":"12.631183","2":"42.55822","3":"Italy","4":"9.898596","5":"55.00000","6":"52","7":"55","8":"80.64188","9":"9.9 million ha"},{"1":"19.076267","2":"51.88442","3":"Poland","4":"9.812577","5":"52.85714","6":"52","7":"55","8":"80.41905","9":"9.8 million ha"},{"1":"27.786411","2":"53.70604","3":"Belarus","4":"9.072313","5":"50.71429","6":"52","7":"55","8":"78.50143","9":"9.1 million ha"},{"1":"24.211692","2":"46.03603","3":"Romania","4":"7.169866","5":"48.57143","6":"52","7":"55","8":"73.57322","9":"7.2 million ha"},{"1":"21.806332","2":"39.08046","3":"Greece","4":"4.037405","5":"46.42857","6":"52","7":"55","8":"65.45872","9":"4 million ha"},{"1":"14.953150","2":"47.91918","3":"Austria","4":"4.034663","5":"44.28571","6":"52","7":"55","8":"65.45162","9":"4 million ha"},{"1":"25.138533","2":"42.73942","3":"Bulgaria","4":"4.028299","5":"42.14286","6":"52","7":"55","8":"65.43513","9":"4 million ha"},{"1":"24.504423","2":"56.89505","3":"Latvia","4":"3.529330","5":"40.00000","6":"52","7":"55","8":"64.14258","9":"3.5 million ha"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>We then tie everything together.</p>
+<p>The columns are generated using <code>geom_segment()</code> and the curved link between them and the countries are generated using <code>geom_sigmoid()</code> from the ggbump package.</p>
+<p>For the color gradient I decided to use the “VanGogh3” color set from the excellent MetBrewer package<span class="citation" data-cites="MetBrewer">(<a href="#ref-MetBrewer" role="doc-biblioref">Mills 2022</a>)</span> that creates color palettes from some of the great works of art hanging in the Metropolitan Museum of Art in New York.</p>
+<div class="cell" data-class-output="preview-image">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(line_data) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>map, <span class="at">color=</span><span class="st">"lightblue1"</span>, <span class="at">fill=</span><span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y, <span class="at">color=</span>forest_ha)) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sigmoid</span>(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y, <span class="at">xend=</span>sigmoid_end, <span class="at">yend=</span>col_y, <span class="at">group=</span>country, <span class="at">color=</span>forest_ha)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label=</span>country, <span class="at">x=</span>sigmoid_end, <span class="at">y=</span>col_y), </span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">2</span>, <span class="at">vjust=</span><span class="dv">0</span>, <span class="at">nudge_y =</span> <span class="fl">0.5</span>, <span class="at">alpha=</span><span class="fl">0.8</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x=</span>col_x_start, <span class="at">xend=</span>col_x_end, <span class="at">y=</span>col_y, <span class="at">yend=</span>col_y, <span class="at">color=</span>forest_ha), </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">size=</span><span class="dv">3</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label=</span>area_label, <span class="at">x=</span>col_x_end, <span class="at">y=</span>col_y), </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">hjust=</span><span class="dv">0</span>, <span class="at">size=</span><span class="fl">2.2</span>, <span class="at">nudge_x =</span> .<span class="dv">3</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title=</span><span class="st">"European countries with the largest forests"</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">""</span>,</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Source: Our world in data </span><span class="sc">\n</span><span class="st">Russia excluded because of lack of fine grained data"</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">clip =</span> <span class="st">"off"</span>) <span class="sc">+</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradientn</span>(<span class="at">colors=</span><span class="fu">met.brewer</span>(<span class="st">"VanGogh3"</span>, <span class="at">type=</span><span class="st">"continuous"</span>)) <span class="sc">+</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_gradientn</span>(<span class="at">colors=</span><span class="fu">met.brewer</span>(<span class="st">"VanGogh3"</span>, <span class="at">type=</span><span class="st">"continuous"</span>)) <span class="sc">+</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_deforestation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="index_files/figure-html/cover-1.png" class="img-fluid" alt="Alter" width="768"></p>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-spData" class="csl-entry" role="doc-biblioentry">
+Bivand, Roger, Jakub Nowosad, and Robin Lovelace. 2021. <em>spData: Datasets for Spatial Analysis</em>. <a href="https://CRAN.R-project.org/package=spData">https://CRAN.R-project.org/package=spData</a>.
+</div>
+<div id="ref-datawizard" class="csl-entry" role="doc-biblioentry">
+Makowski, Dominique, Daniel Lüdecke, Indrajeet Patil, Mattan S. Ben-Shachar, and Brenton M. Wiernik. 2021. <span>“Datawizard: Easy Data Wrangling.”</span> <em>CRAN</em>. <a href="https://easystats.github.io/datawizard/">https://easystats.github.io/datawizard/</a>.
+</div>
+<div id="ref-MetBrewer" class="csl-entry" role="doc-biblioentry">
+Mills, Blake Robert. 2022. <em>MetBrewer: Color Palettes Inspired by Works at the Metropolitan Museum of Art</em>. <a href="https://CRAN.R-project.org/package=MetBrewer">https://CRAN.R-project.org/package=MetBrewer</a>.
+</div>
+<div id="ref-sf" class="csl-entry" role="doc-biblioentry">
+Pebesma, Edzer. 2018. <span>“<span class="nocase">Simple Features for R: Standardized Support for Spatial Vector Data</span>.”</span> <em><span>The R Journal</span></em> 10 (1): 439–46. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>.
+</div>
+<div id="ref-deforestation2021" class="csl-entry" role="doc-biblioentry">
+Ritchie, Hannah, and Max Roser. 2021. <span>“Forests and Deforestation.”</span> <em>Our World in Data</em>. <a href="https://ourworldindata.org/forests-and-deforestation">https://ourworldindata.org/forests-and-deforestation</a>.
+</div>
+<div id="ref-ggbump" class="csl-entry" role="doc-biblioentry">
+Sjoberg, David. 2020. <em>Ggbump: Bump Chart and Sigmoid Curves</em>. <a href="https://CRAN.R-project.org/package=ggbump">https://CRAN.R-project.org/package=ggbump</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="JonGretar/JonGretar.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzNjE1NDczMDI=" data-category="BlogComments" data-category-id="DIC_kwDOFYzGJs4CBFLC" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

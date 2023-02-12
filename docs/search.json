@@ -1,0 +1,93 @@
+[
+  {
+    "objectID": "posts/2022-01-10-forests-of-europe/index.html",
+    "href": "posts/2022-01-10-forests-of-europe/index.html",
+    "title": "Forests of Europe",
+    "section": "",
+    "text": "For this graph I wish to recreate a version of this excellent example map from the ggbump(Sjoberg 2020) package. I find it to be a wonderful example of using maps in data science and it is a great way to learn to use a few nice tricks in plot generation in ggplot. It would also be my entry into the world of using R for geographic data and an excellent use of the Deforestation(Ritchie and Roser 2021) dataset from TidyTuesday.\nThe trick to generating this kind of chart is to play around with the coordinate system. We need to transfer the bar generation into the latitude and the longitude of of the map. I guess we could do it the other way and move the map coordinates to the coordinates of a column chart but when working with map data it seems to be far simpler to move everything else into their domain."
+  },
+  {
+    "objectID": "posts/2022-01-10-forests-of-europe/index.html#themeing",
+    "href": "posts/2022-01-10-forests-of-europe/index.html#themeing",
+    "title": "Forests of Europe",
+    "section": "Themeing",
+    "text": "Themeing\nBefore we get into the map itself I wish to start by generating the theme separately so we don’t have to repeat it all over the code. I tend to separate the theme from the plots a lot when I am repeating similar charts over a document.\n\ntheme_deforestation = function() {\n  theme_void() +\n  theme(\n    plot.margin = margin(.5, 1, .5, .5, \"cm\"),\n    plot.background = element_rect(fill = \"lightblue1\"),\n    plot.title = element_text(family = \"Roboto Condensed\", size = 18, hjust=0.5),\n    plot.caption = element_text(family = \"Roboto Condensed\", size = 6),\n    axis.text.y.left = element_blank(),\n    axis.text.x.bottom = element_blank(),\n    legend.position = \"none\",\n    text=element_text(family = \"Roboto Condensed\")\n  )\n}"
+  },
+  {
+    "objectID": "posts/2022-01-10-forests-of-europe/index.html#the-map-data",
+    "href": "posts/2022-01-10-forests-of-europe/index.html#the-map-data",
+    "title": "Forests of Europe",
+    "section": "The map data",
+    "text": "The map data\nFirst step is the use the world dataset from the spData(Bivand, Nowosad, and Lovelace 2021) package to get a basic map of the world that we then filter to the European countries. We also exclude Russia as the dataset does not tell us how much of the forest in Russia is located inside Europe.\nWe then use the st_crop() function from the sf(Pebesma 2018) package to crop the chart to the area we wish to view. Then using geom_sf we render this chart in ggplot2.\n\nmap <- world |> \n  filter(continent == \"Europe\", iso_a2 != \"RU\") |> \n  st_crop(xmin = -24, xmax = 40, ymin = 33, ymax = 74)\n\nggplot() +\n  geom_sf(data=map, color=\"lightblue1\", fill=\"forestgreen\") +\n  theme_deforestation()\n\n\n\n\nSo far so good. Next we need to convert those polygons into their centroid points so we have something to link to when we create the path from the countries to their corresponding bar labels. For that we use the st_point_on_surface() function to pull the data into sf points and then use st_coordinates() to convert those geometries to X and Y vectors. We then retrieve the country names back from the original dataset and plot the points on top of the map.\n\npoints <- map |> \n  st_point_on_surface() |> \n  st_coordinates() |> \n  as_tibble() |> \n  mutate( country = map$name_long )\n\n\n\n\n\n  \n\n\n\n\nggplot(points) +\n  geom_sf(data=map, color=\"lightblue1\", fill=\"forestgreen\") +\n  geom_point(aes(x=X, y=Y)) +\n  geom_text(\n    aes(x=X, y=Y, label=country), \n            hjust=0, nudge_x=1, check_overlap=TRUE\n  ) +\n  theme_deforestation()"
+  },
+  {
+    "objectID": "posts/2022-01-10-forests-of-europe/index.html#deforestation-data",
+    "href": "posts/2022-01-10-forests-of-europe/index.html#deforestation-data",
+    "title": "Forests of Europe",
+    "section": "Deforestation data",
+    "text": "Deforestation data\nNext up us to get the data from the deforestation dataset. We choose the year 2020 and convert the percentage of world cover to millions of hectare. There is an estimate of 4.06 billion hectares of forests in the world.\n\nforest_area <- \n  tuesdata$forest_area |> \n  filter(year == 2020) |> \n  mutate(\n    forest_ha = 4200000000 * (forest_area/100) / 1000000\n  ) |> \n  select(entity, forest_ha)"
+  },
+  {
+    "objectID": "posts/2022-01-10-forests-of-europe/index.html#putting-it-all-together",
+    "href": "posts/2022-01-10-forests-of-europe/index.html#putting-it-all-together",
+    "title": "Forests of Europe",
+    "section": "Putting it all together",
+    "text": "Putting it all together\nNow to the fun part. We join the forest_area and the point datasets. We then need to use the data_rescale() function from the datawizard package(Makowski et al. 2021) to convert the data to make coordinates on the plot.\nFor the y position we rank the rows by forest area and feed rescale the rank to fit between 40 and 70 giving us the y position of lines.\nFor the x positions of the columns we choose to start at 55 and then rescale the forest area data to range between 55 and 130. We also need to define the old range to start at 0 as otherwise we will rescale the lowest ha number to 55.\n\nline_data <-\n  points |> \n  left_join(forest_area, by=c(\"country\" = \"entity\")) |> \n  slice_max(forest_ha, n=15) |> \n  mutate(\n    col_y = rank(forest_ha) |> data_rescale(to=c(40, 70)),\n    sigmoid_end = 52,\n    col_x_start = 55,\n    col_x_end = forest_ha |> data_rescale(to=c(55, 130), range = c(0, max(forest_ha))),\n    area_label = paste0(round(forest_ha, 1), \" million ha\")\n  )\n\n\nline_data |> paged_table()\n\n\n\n  \n\n\n\nWe then tie everything together.\nThe columns are generated using geom_segment() and the curved link between them and the countries are generated using geom_sigmoid() from the ggbump package.\nFor the color gradient I decided to use the “VanGogh3” color set from the excellent MetBrewer package(Mills 2022) that creates color palettes from some of the great works of art hanging in the Metropolitan Museum of Art in New York.\n\nggplot(line_data) +\n  geom_sf(data=map, color=\"lightblue1\", fill=\"forestgreen\") +\n  geom_point(aes(x=X, y=Y, color=forest_ha)) +\n  geom_sigmoid(\n    aes(x=X, y=Y, xend=sigmoid_end, yend=col_y, group=country, color=forest_ha)\n  ) +\n  geom_text(\n    aes(label=country, x=sigmoid_end, y=col_y), \n    hjust=1, size=2, vjust=0, nudge_y = 0.5, alpha=0.8\n  ) +\n  geom_segment(\n    aes(x=col_x_start, xend=col_x_end, y=col_y, yend=col_y, color=forest_ha), \n    size=3\n  ) +\n  geom_text(\n    aes(label=area_label, x=col_x_end, y=col_y), \n    hjust=0, size=2.2, nudge_x = .3\n  ) +\n  labs(\n    title=\"European countries with the largest forests\",\n    subtitle = \"\",\n    caption = \"Source: Our world in data \\nRussia excluded because of lack of fine grained data\"\n  ) +\n  coord_sf(clip = \"off\") +\n  scale_fill_gradientn(colors=met.brewer(\"VanGogh3\", type=\"continuous\")) +\n  scale_color_gradientn(colors=met.brewer(\"VanGogh3\", type=\"continuous\")) +\n  theme_deforestation()"
+  },
+  {
+    "objectID": "posts/2021-04-25-welcome/index.html",
+    "href": "posts/2021-04-25-welcome/index.html",
+    "title": "First Quarto post",
+    "section": "",
+    "text": "There are a few reasons for why I would like to try Quarto (Allaire et al. 2021) as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry (Arnór Snorrason and Stefán Freyr Einarsson 2006).\nOther reasons are the capabilities of working with the data right in the blogging system and creating the charts and tables in the same area as I write the post."
+  },
+  {
+    "objectID": "posts/2021-04-25-welcome/index.html#working-with-data",
+    "href": "posts/2021-04-25-welcome/index.html#working-with-data",
+    "title": "First Quarto post",
+    "section": "Working with data",
+    "text": "Working with data\nFor example we have the following data that I would like to work with.\n\n\n\n\n  \n\n\n\nFirst I would like to do basic manipulation of the data.\n\ntrees$dbh <- (trees$diam1 + trees$diam2) / 2\ntrees$ba <- (trees$dbh/200)^2 * pi\n\nFor the next trick we use linear regressions to calculate the expected height of the trees. We then use coalesce() to copy back the height we already knew. From there we can calculate the volume of each tree using the volume functions (Arnór Snorrason and Stefán Freyr Einarsson 2006).\n\ntrees$height <- lm(height_measured ~ ba, data=trees) %>% \n  predict(trees)\ntrees$height <- coalesce(trees$height_measured, trees$height)\n\ntrees$v <- 0.1299 * trees$dbh^1.6834 * trees$height^0.8598\n\n\n\n`geom_smooth()` using formula 'y ~ x'\n\n\nWarning: Removed 20 rows containing non-finite values (stat_smooth).\n\n\nWarning: Removed 20 rows containing non-finite values (stat_regline_equation).\n\n\nWarning: Removed 20 rows containing non-finite values (stat_cor).\n\n\nWarning: Removed 20 rows containing missing values (geom_point)."
+  },
+  {
+    "objectID": "posts/2021-04-25-welcome/index.html#math-with-r",
+    "href": "posts/2021-04-25-welcome/index.html#math-with-r",
+    "title": "First Quarto post",
+    "section": "Math with R",
+    "text": "Math with R\nUsing LaTeX math symbols we can communicate mathematical functions in a nice manner. For example we can talk about BAL as described by Arne Pommerening’s excellent article Basal area in larger trees and the growth compensation point where he explains BAL as such:\n\nBAL is related to available light, since with increasing basal area of larger trees there is less light available for smaller trees. In a sense BAL is a surrogate for light measurements with the benefit that stem diameters and basal area are easier to measure.\n\n\\[BAL_i(t) = G(t) \\cdot (1 - p_i(t)) \\text{ where } p_i(t) = \\frac{1}{G(t)} \\sum_{\\leq g_i(t)} g_i(t)\\]\nHe also give us an example function in R. Let us use it to calculate the BAL of individual trees in our example data.\n\nbal <- function(ba, area) {\n sumba <- sum(ba)\n basmaller <- 0\n pix <- 0\n bal <- 0\n for (i in 1 : length(ba)) {\n   bax <- ba[i]\n   basmaller <- sum(ba[ba <= bax])\n   pix <- basmaller / sumba\n   bal[i] <- sumba * (1 - pix) / area\n }\n return(bal)\n}\n# An then run it for out 0.54ha example stand.\ntrees$bal <- bal(trees$ba, 0.54/10000)"
+  },
+  {
+    "objectID": "posts/2021-12-20-deforestation/index.html",
+    "href": "posts/2021-12-20-deforestation/index.html",
+    "title": "Deforestation",
+    "section": "",
+    "text": "knitr::opts_chunk$set(\n  warning=FALSE,\n  code_folding=FALSE\n)\nI’ve been wanting to play around in the TidyTuesday scene for a while now. The deforestation dataset (Ritchie and Roser 2021) is obviously of specific interest to me as a forest science student so I chose that one to begin with."
+  },
+  {
+    "objectID": "posts/2021-12-20-deforestation/index.html#rank-of-northern-countries",
+    "href": "posts/2021-12-20-deforestation/index.html#rank-of-northern-countries",
+    "title": "Deforestation",
+    "section": "Rank of Northern Countries",
+    "text": "Rank of Northern Countries\nI’m gonna start it simple and the generate a simple ranked bump chart of the net change of forestry of the northern European countries using ggbump(Sjoberg 2020).\nFirst of it to filter in the northern countries that we wish to see. We also need to filter out the 2015 data as there seem to be gaps in them. For each year we proceed to use rank() to rank each country by the net change in forest area.\n\ncountries <- c('Iceland', 'Finland', 'Sweden', 'Norway', 'Denmark')\n\nranked <- tuesdata$forest |> \n  filter(entity %in% countries) |> \n  filter(year <= 2010) |> \n  group_by(year) |> \n  mutate(rank = rank(-net_forest_conversion))\n\n\nranked |> paged_table()\n\n\n\n  \n\n\n\nWith this data it is pretty straight forward to use geom_bump() to generate a simple bump map. I’m gonna use hrbrthemes(Rudis 2020) as a base theme for my graphs as it tends to be my default theme.\n\nranked |> \n  ggplot(aes(year, rank, color=entity, group=entity, label=entity)) +\n  geom_bump(\n    smooth=15, size=6, alpha=0.4\n  ) +\n  geom_text(\n    data = ( ranked |> filter(year==1990) ), \n    hjust = \"left\", color = \"black\", nudge_x = 0.1, size = 3\n  ) +\n  #geom_text(aes(label=net_forest_conversion), size=2, nudge_y = -0.2) +\n  scale_y_reverse() +\n  labs(\n    title = \"Rank of net forest change of nothern countries\",\n    y = \"Rank\",\n    x = \"Year\",\n    caption = \"Source: Our world in data\"\n  ) +\n  theme_ipsum_rc(grid = \"\", axis_title_size = 13) +\n  theme(legend.position = \"none\")\n\n\n\n\nIt turns out that this was not a good way of viewing this data. But oh well. I will leave it here nevertheless."
+  },
+  {
+    "objectID": "posts/2021-12-20-deforestation/index.html#countries-with-the-largest-change-of-forest-area.",
+    "href": "posts/2021-12-20-deforestation/index.html#countries-with-the-largest-change-of-forest-area.",
+    "title": "Deforestation",
+    "section": "Countries with the largest change of forest area.",
+    "text": "Countries with the largest change of forest area.\nNext to explore this same table I wish to generate a lollipop chart showing the countries of the world with the lagest positive and negative change in forest cover. To do this I take countries the top 20 absolute values of net forest conversion, I reorder those by real net_forest_conversion and then prepare a text for the coloring of negative or positive values.\n\nforest_countries <- tuesdata$forest |> \n  filter(year == 2010, entity != \"World\") |> \n  slice_max(abs(net_forest_conversion), n=20) |> \n  mutate(\n    country = fct_reorder(as.factor(entity), net_forest_conversion),\n    negative = if_else(net_forest_conversion <= 0, \"Negative rate\", \"Positive rate\")\n  ) |> \n  select(country, net_forest_conversion, negative)\n\n\nforest_countries |> paged_table()\n\n\n\n  \n\n\n\nFrom this we can generate a basic lollipop chart using geom_segment() and geom_point() as the base for the lollipops. I also flip the coordinates as it is better than rotating the country labels to a near vertical position.\n\nforest_countries |> \n  ggplot(aes(country, abs(net_forest_conversion), color=negative)) +\n  geom_hline(aes(yintercept=0), alpha=0.1) +\n  geom_segment(aes(\n    y = 0,\n    x = country,\n    yend = abs(net_forest_conversion),\n    xend = country\n  ), show.legend=FALSE, size=1.5) +\n  geom_point(size=4) +\n  scale_y_comma(breaks=seq(0, 2500000, 500000), limits=c(0,2000000), suffix=\" ha\") +\n  labs(\n    title = \"Countries with the largest change of forest area\",\n    subtitle = \"Top 20 countries with absolute values of net forest conversion\",\n    caption = \"Source: Our world in data\",\n    x = \"Country\",\n    y = \"Net forest conversion\"\n  ) +\n  coord_flip(clip = 'off') +\n  theme_ipsum_rc(grid=\"Xx\", axis_title_size = 12, axis_text_size = 10,\n                 ) +\n  theme(\n    legend.position = \"top\", \n    legend.title = element_blank()\n  )\n\n\n\n\nI kind of like this one. The reason I chose to use the absolute values, instead of having the 0 in the middle, was to make it easier to compare the rate of change. It highlights the crazy deforestation going on in Brazil and the even crazier amount of forest being planted in China.\nTo see how I use this data for map making check out my next post"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Articles",
+    "section": "",
+    "text": "Forests of Europe\n\n\n\n\n\n\n\nR\n\n\nTidyTuesday\n\n\nForestry\n\n\nGIS\n\n\n\n\nIn this post I wish to continue a little bit with the TidyTuesday deforestation data I worked with in the last post. The inspiration came from wanting to get my hands dirty with map data and the sf package.\n\n\n\n\n\n\nJan 10, 2022\n\n\n\n\n\n\n  \n\n\n\n\nDeforestation\n\n\n\n\n\n\n\nR\n\n\nTidyTuesday\n\n\nForestry\n\n\n\n\nTidyTuesday is a weekly community event where many participants in the R ecosystem join together to visualize a dataset. I decided to begin with an older dataset from week 15 of 2021 that focuses on deforestation.\n\n\n\n\n\n\nDec 20, 2021\n\n\n\n\n\n\n  \n\n\n\n\nFirst Quarto post\n\n\n\n\n\n\n\nR\n\n\nQuarto\n\n\n\n\nThis is just a demo post. The idea is to test the capabilities of Quarto as a blogging platform. In this post I am just trying out a few capabilities of Quarto and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here.\n\n\n\n\n\n\nApr 25, 2021\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Old dev and a forestry student focusing on forest biometrics.\n\n\n\nTech Interests: Elixir, RStats, GIS, SmartOS"
+  }
+]
