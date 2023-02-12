@@ -169,7 +169,7 @@ div.csl-indent {
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../index.html">
- <span class="menu-text">Blog</span></a>
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../../about.html">
@@ -272,21 +272,6 @@ div.csl-indent {
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>trees<span class="sc">$</span>v <span class="ot">&lt;-</span> <span class="fl">0.1299</span> <span class="sc">*</span> trees<span class="sc">$</span>dbh<span class="sc">^</span><span class="fl">1.6834</span> <span class="sc">*</span> trees<span class="sc">$</span>height<span class="sc">^</span><span class="fl">0.8598</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-class-output="preview-image">
-<div class="cell-output cell-output-stderr">
-<pre><code>`geom_smooth()` using formula 'y ~ x'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 20 rows containing non-finite values (stat_smooth).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 20 rows containing non-finite values (stat_regline_equation).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 20 rows containing non-finite values (stat_cor).</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 20 rows containing missing values (geom_point).</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="index_files/figure-html/final-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -301,21 +286,21 @@ div.csl-indent {
 <p><span class="math display">\[BAL_i(t) = G(t) \cdot (1 - p_i(t)) \text{ where } p_i(t) = \frac{1}{G(t)} \sum_{\leq g_i(t)} g_i(t)\]</span></p>
 <p>He also give us an example function in R. Let us use it to calculate the BAL of individual trees in our example data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>bal <span class="ot">&lt;-</span> <span class="cf">function</span>(ba, area) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a> sumba <span class="ot">&lt;-</span> <span class="fu">sum</span>(ba)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a> basmaller <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a> pix <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a> bal <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> <span class="fu">length</span>(ba)) {</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>   bax <span class="ot">&lt;-</span> ba[i]</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>   basmaller <span class="ot">&lt;-</span> <span class="fu">sum</span>(ba[ba <span class="sc">&lt;=</span> bax])</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>   pix <span class="ot">&lt;-</span> basmaller <span class="sc">/</span> sumba</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>   bal[i] <span class="ot">&lt;-</span> sumba <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> pix) <span class="sc">/</span> area</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a> }</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">return</span>(bal)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># An then run it for out 0.54ha example stand.</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>trees<span class="sc">$</span>bal <span class="ot">&lt;-</span> <span class="fu">bal</span>(trees<span class="sc">$</span>ba, <span class="fl">0.54</span><span class="sc">/</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bal <span class="ot">&lt;-</span> <span class="cf">function</span>(ba, area) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> sumba <span class="ot">&lt;-</span> <span class="fu">sum</span>(ba)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> basmaller <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> pix <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> bal <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> <span class="fu">length</span>(ba)) {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   bax <span class="ot">&lt;-</span> ba[i]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   basmaller <span class="ot">&lt;-</span> <span class="fu">sum</span>(ba[ba <span class="sc">&lt;=</span> bax])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   pix <span class="ot">&lt;-</span> basmaller <span class="sc">/</span> sumba</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   bal[i] <span class="ot">&lt;-</span> sumba <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> pix) <span class="sc">/</span> area</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">return</span>(bal)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># An then run it for out 0.54ha example stand.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>trees<span class="sc">$</span>bal <span class="ot">&lt;-</span> <span class="fu">bal</span>(trees<span class="sc">$</span>ba, <span class="fl">0.54</span><span class="sc">/</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
