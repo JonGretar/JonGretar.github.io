@@ -1,3 +1,4 @@
+/.quarto/
 .Rproj.user
 .Rhistory
 .RData
@@ -9,8 +10,6 @@ rsconnect
 issues
 dev
 reference
-_posts/*/*.js
-_posts/*/*.html
-_posts/*/*.md
-_posts/*/*_files/
-_posts/*/*_files/*
+README.html
+README_files/
+
