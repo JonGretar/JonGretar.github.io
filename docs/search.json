@@ -39,7 +39,7 @@
     "href": "posts/2021-04-25-welcome/index.html",
     "title": "First Quarto post",
     "section": "",
-    "text": "There are a few reasons for why I would like to try Quarto (Allaire et al. 2021) as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry (Arnór Snorrason and Stefán Freyr Einarsson 2006).\nOther reasons are the capabilities of working with the data right in the blogging system and creating the charts and tables in the same area as I write the post."
+    "text": "There are a few reasons for why I would like to try Quarto (Allaire 2022) as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry (Arnór Snorrason and Stefán Freyr Einarsson 2006).\nOther reasons are the capabilities of working with the data right in the blogging system and creating the charts and tables in the same area as I write the post."
   },
   {
     "objectID": "posts/2021-04-25-welcome/index.html#working-with-data",

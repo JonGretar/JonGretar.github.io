@@ -31,7 +31,7 @@ trees <- read_delim("posts/2021-04-25-welcome/plot2.csv", ";",
 
 ## Why Quarto?
 
-There are a few reasons for why I would like to try [Quarto](https://quarto.org) [@distill2021] as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article *Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry* [@arnórsnorrason2006].
+There are a few reasons for why I would like to try [Quarto](https://quarto.org) [@quarto] as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article *Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry* [@arnórsnorrason2006].
 
 Other reasons are the capabilities of working with the data right in the blogging system and creating the charts and tables in the same area as I write the post.
 
