@@ -11,5 +11,13 @@
     "ghcr.io/rocker-org/devcontainer-features/quarto-cli:1": {
       "installTinyTex": true
     }
-  }
+},
+"customizations": {
+	"vscode": {
+		"extensions": [
+			"Ikuyadeu.r-pack",
+			"ms-toolsai.jupyter"
+		]
+	}
+}
 }
