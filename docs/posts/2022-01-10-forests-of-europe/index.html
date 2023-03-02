@@ -296,7 +296,7 @@ div.csl-indent {
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>map, <span class="at">color=</span><span class="st">"lightblue1"</span>, <span class="at">fill=</span><span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_deforestation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>So far so good. Next we need to convert those polygons into their centroid points so we have something to link to when we create the path from the countries to their corresponding bar labels. For that we use the <code>st_point_on_surface()</code> function to pull the data into sf points and then use <code>st_coordinates()</code> to convert those geometries to X and Y vectors. We then retrieve the country names back from the original dataset and plot the points on top of the map.</p>
@@ -327,7 +327,7 @@ div.csl-indent {
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_deforestation</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -346,7 +346,7 @@ div.csl-indent {
 </section>
 <section id="putting-it-all-together" class="level2">
 <h2 class="anchored" data-anchor-id="putting-it-all-together">Putting it all together</h2>
-<p>Now to the fun part. We join the forest_area and the point datasets. We then need to use the <code>data_rescale()</code> function from the datawizard package<span class="citation" data-cites="datawizard">(<a href="#ref-datawizard" role="doc-biblioref">Makowski et al. 2021</a>)</span> to convert the data to make coordinates on the plot.</p>
+<p>Now to the fun part. We join the forest_area and the point datasets. We then need to use the <code>rescale()</code> function from the datawizard package<span class="citation" data-cites="datawizard">(<a href="#ref-datawizard" role="doc-biblioref">Makowski et al. 2021</a>)</span> to convert the data to make coordinates on the plot.</p>
 <p>For the y position we rank the rows by forest area and feed rescale the rank to fit between 40 and 70 giving us the y position of lines.</p>
 <p>For the x positions of the columns we choose to start at 55 and then rescale the forest area data to range between 55 and 130. We also need to define the old range to start at 0 as otherwise we will rescale the lowest ha number to 55.</p>
 <div class="cell">
@@ -355,10 +355,10 @@ div.csl-indent {
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(forest_area, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"country"</span> <span class="ot">=</span> <span class="st">"entity"</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice_max</span>(forest_ha, <span class="at">n=</span><span class="dv">15</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_y =</span> <span class="fu">rank</span>(forest_ha) <span class="sc">|&gt;</span> <span class="fu">data_rescale</span>(<span class="at">to=</span><span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">70</span>)),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_y =</span> <span class="fu">rank</span>(forest_ha) <span class="sc">|&gt;</span> <span class="fu">rescale</span>(<span class="at">to=</span><span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">70</span>)),</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">sigmoid_end =</span> <span class="dv">52</span>,</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_x_start =</span> <span class="dv">55</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_x_end =</span> forest_ha <span class="sc">|&gt;</span> <span class="fu">data_rescale</span>(<span class="at">to=</span><span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">130</span>), <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(forest_ha))),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">col_x_end =</span> forest_ha <span class="sc">|&gt;</span> <span class="fu">rescale</span>(<span class="at">to=</span><span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">130</span>), <span class="at">range =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(forest_ha))),</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">area_label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(forest_ha, <span class="dv">1</span>), <span class="st">" million ha"</span>)</span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -376,7 +376,7 @@ div.csl-indent {
 <p>We then tie everything together.</p>
 <p>The columns are generated using <code>geom_segment()</code> and the curved link between them and the countries are generated using <code>geom_sigmoid()</code> from the ggbump package.</p>
 <p>For the color gradient I decided to use the “VanGogh3” color set from the excellent MetBrewer package<span class="citation" data-cites="MetBrewer">(<a href="#ref-MetBrewer" role="doc-biblioref">Mills 2022</a>)</span> that creates color palettes from some of the great works of art hanging in the Metropolitan Museum of Art in New York.</p>
-<div class="cell" data-class-output="preview-image">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(line_data) <span class="sc">+</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">data=</span>map, <span class="at">color=</span><span class="st">"lightblue1"</span>, <span class="at">fill=</span><span class="st">"forestgreen"</span>) <span class="sc">+</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>X, <span class="at">y=</span>Y, <span class="at">color=</span>forest_ha)) <span class="sc">+</span></span>

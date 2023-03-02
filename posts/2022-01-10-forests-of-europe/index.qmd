@@ -114,7 +114,7 @@ forest_area <-
 
 ## Putting it all together
 
-Now to the fun part. We join the forest_area and the point datasets. We then need to use the `data_rescale()` function from the datawizard package[@datawizard] to convert the data to make coordinates on the plot.
+Now to the fun part. We join the forest_area and the point datasets. We then need to use the `rescale()` function from the datawizard package[@datawizard] to convert the data to make coordinates on the plot.
 
 For the y position we rank the rows by forest area and feed rescale the rank to fit between 40 and 70 giving us the y position of lines.
 
@@ -126,10 +126,10 @@ line_data <-
   left_join(forest_area, by=c("country" = "entity")) |> 
   slice_max(forest_ha, n=15) |> 
   mutate(
-    col_y = rank(forest_ha) |> data_rescale(to=c(40, 70)),
+    col_y = rank(forest_ha) |> rescale(to=c(40, 70)),
     sigmoid_end = 52,
     col_x_start = 55,
-    col_x_end = forest_ha |> data_rescale(to=c(55, 130), range = c(0, max(forest_ha))),
+    col_x_end = forest_ha |> rescale(to=c(55, 130), range = c(0, max(forest_ha))),
     area_label = paste0(round(forest_ha, 1), " million ha")
   )
 ```
