@@ -35,13 +35,6 @@
         "ms-toolsai.jupyter"
       ]
     }
-},
-"customizations": {
-	"vscode": {
-		"extensions": [
-			"Ikuyadeu.r-pack",
-			"ms-toolsai.jupyter"
-		]
-	}
-}
+  },
+
 }
