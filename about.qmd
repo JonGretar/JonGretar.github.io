@@ -4,20 +4,17 @@ image: images/silouette-1.jpg
 about:
   template: jolla
   links:
-    
+
     - icon: github
       text: Github
       href: https://github.com/JonGretar
     - icon: mastodon
       text: Mastodon
       href: https://fosstodon.org/@JonGretar
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com/JonGretar
     - icon: linkedin
       text: LinkedIn
       href: http://linkedin.com/in/jongretar/
-    
+
 ---
 
 #### *Old dev and a forestry student focusing on forest biometrics.*
@@ -30,6 +27,6 @@ Seeking to broaden my horizons, I pursued a bachelor's degree in Forest Science 
 
 #### Tech Interests: Elixir, RStats, GIS, Statistics, SmartOS
 
-In the beginning I was mostly in system management of Linux servers with software development as part of automation and integration of systems such as telcom switches until I moved to software development exclusively. Where I mostly worked with Ruby, Node.js, Erlang and Elixir. 
+In the beginning I was mostly in system management of Linux servers with software development as part of automation and integration of systems such as telcom switches until I moved to software development exclusively. Where I mostly worked with Ruby, Node.js, Erlang and Elixir.
 
 Other languages and software I have experience with is for example R, Python, MySQL, PostgreSQL, CouchDB, RethinkDB, SaltStack and Docker.
