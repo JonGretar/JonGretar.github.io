@@ -24,7 +24,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-I've been wanting to play around in the [TidyTuesday](https://github.com/rfordatascience/tidytuesday) scene for a while now. The deforestation dataset [@deforestation2021] is obviously of specific interest to me as a forest science student so I chose that one to begin with.
+ I've been wanting to play around in the
+ [TidyTuesday](https://github.com/rfordatascience/tidytuesday) scene for a
+ while now. The deforestation dataset [@deforestation2021] is obviously of
+ specific interest to me as a forest science student so I chose that one to
+ begin with. 
 
 ```{r}
 library(tidyverse)
@@ -36,9 +40,14 @@ tuesdata <- readRDS("posts/2021-12-20-deforestation/deforestation.data")
 
 ## Rank of Northern Countries
 
-I'm gonna start it simple and the generate a simple ranked bump chart of the net change of forestry of the northern European countries using ggbump[@ggbump].
+I'm gonna start it simple and the generate a simple ranked bump chart of the
+net change of forestry of the northern European countries using
+ggbump[@ggbump].
 
-First of it to filter in the northern countries that we wish to see. We also need to filter out the 2015 data as there seem to be gaps in them. For each year we proceed to use `rank()` to rank each country by the net change in forest area.
+First of it to filter in the northern countries that we wish to see. We also
+need to filter out the 2015 data as there seem to be gaps in them. For each
+year we proceed to use `rank()` to rank each country by the net change in
+forest area.
 
 ```{r}
 countries <- c('Iceland', 'Finland', 'Sweden', 'Norway', 'Denmark')
@@ -54,7 +63,9 @@ ranked <- tuesdata$forest |>
 ranked |> paged_table()
 ```
 
-With this data it is pretty straight forward to use `geom_bump()` to generate a simple bump map. I'm gonna use hrbrthemes[@hrbrthemes] as a base theme for my graphs as it tends to be my default theme.
+With this data it is pretty straight forward to use `geom_bump()` to generate a
+simple bump map. I'm gonna use hrbrthemes[@hrbrthemes] as a base theme for my
+graphs as it tends to be my default theme.
 
 ```{r}
 #| label: ranked
@@ -80,11 +91,16 @@ ranked |>
   theme(legend.position = "none")
 ```
 
-It turns out that this was not a good way of viewing this data. But oh well. I will leave it here nevertheless.
+It turns out that this was not a good way of viewing this data. But oh well. I
+will leave it here nevertheless.
 
 ## Countries with the largest change of forest area.
 
-Next to explore this same table I wish to generate a lollipop chart showing the countries of the world with the lagest positive and negative change in forest cover. To do this I take countries the top 20 *absolute* values of net forest conversion, I reorder those by real net_forest_conversion and then prepare a text for the coloring of negative or positive values.
+Next to explore this same table I wish to generate a lollipop chart showing the
+countries of the world with the lagest positive and negative change in forest
+cover. To do this I take countries the top 20 *absolute* values of net forest
+conversion, I reorder those by real net_forest_conversion and then prepare a
+text for the coloring of negative or positive values.
 
 ```{r}
 forest_countries <- tuesdata$forest |> 
@@ -101,7 +117,9 @@ forest_countries <- tuesdata$forest |>
 forest_countries |> paged_table()
 ```
 
-From this we can generate a basic lollipop chart using `geom_segment()` and `geom_point()` as the base for the lollipops. I also flip the coordinates as it is better than rotating the country labels to a near vertical position.
+From this we can generate a basic lollipop chart using `geom_segment()` and
+`geom_point()` as the base for the lollipops. I also flip the coordinates as it
+is better than rotating the country labels to a near vertical position.
 
 ```{r}
 #| label: forest-area
@@ -134,6 +152,11 @@ forest_countries |>
   )
 ```
 
-I kind of like this one. The reason I chose to use the absolute values, instead of having the 0 in the middle, was to make it easier to compare the rate of change. It highlights the crazy deforestation going on in Brazil and the even crazier amount of forest being planted in China.
+I kind of like this one. The reason I chose to use the absolute values, instead
+of having the 0 in the middle, was to make it easier to compare the rate of
+change. It highlights the crazy deforestation going on in Brazil and the even
+crazier amount of forest being planted in China.
 
-To see how I use this data for map making check out my [next post](/posts/2022-01-10-forests-of-europe/)
+To see how I use this data for map making check out my [next
+post](/posts/2022-01-10-forests-of-europe/)
+
