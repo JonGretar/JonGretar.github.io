@@ -1,4 +1,6 @@
 /.quarto/
+/.venv/
+requirements.txt
 .Rproj.user
 .Rhistory
 .RData

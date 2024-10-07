@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="dcterms.date" content="2021-04-25">
+<meta name="description" content="This is just a demo post. The idea is to test the capabilities of Quarto as a blogging platform. In this post I am just trying out a few capabilities of Quarto and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here.">
 
-<title>Articles – Jón Grétar</title>
+<title>First Quarto post – Jón Grétar</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,27 +22,79 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,35 +122,8 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
+<link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <script src="https://t.usermaven.com/lib.js" data-key="UM7FfLat17" data-tracking-host="https://events.usermaven.com" data-autocapture="true" defer="">
 </script>
 <script>window.usermaven = window.usermaven || (function(){(window.usermavenQ = window.usermavenQ || []).push(arguments);})</script>
@@ -134,14 +161,14 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">Jón Grétar</span>
     </a>
   </div>
@@ -152,22 +179,17 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
+    <a class="nav-link" href="../../index.html"> 
 <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../../about.html"> 
 <span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
-</i> 
-<span class="menu-text"></span></a>
-  </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/JonGretar"> <i class="bi bi-twitter" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -184,153 +206,126 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">First Quarto post</h1>
+                  <div>
+        <div class="description">
+          <p>This is just a demo post. The idea is to test the capabilities of Quarto as a blogging platform. In this post I am just trying out a few capabilities of Quarto and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">Quarto</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 25, 2021</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(3)</span></div><div class="category" data-category="Forestry">Forestry <span class="quarto-category-count">(2)</span></div><div class="category" data-category="GIS">GIS <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Quarto">Quarto <span class="quarto-category-count">(1)</span></div><div class="category" data-category="R">R <span class="quarto-category-count">(3)</span></div><div class="category" data-category="TidyTuesday">TidyTuesday <span class="quarto-category-count">(2)</span></div></div></div>
+    
 <!-- main -->
-<main class="content column-page-left" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Articles</h1>
-</div>
-
-
-
-<div class="quarto-title-meta column-page-left">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
 
 
 
 
+<section id="why-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="why-quarto">Why Quarto?</h2>
+<p>There are a few reasons for why I would like to try <a href="https://quarto.org">Quarto</a> <span class="citation" data-cites="quarto">(<a href="#ref-quarto" role="doc-biblioref">Allaire 2022</a>)</span> as my blogging platform. As I want to write more things of scientific nature I would like to be able to easily cite articles. For example later in this example page I use volume functions from the article <em>Single-tree biomass and stem volume functions for eleven tree species used in Icelandic forestry</em> <span class="citation" data-cites="arnórsnorrason2006">(<a href="#ref-arnórsnorrason2006" role="doc-biblioref">Arnór Snorrason and Stefán Freyr Einarsson 2006</a>)</span>.</p>
+<p>Other reasons are the capabilities of working with the data right in the blogging system and creating the charts and tables in the same area as I write the post.</p>
+</section>
+<section id="working-with-data" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-data">Working with data</h2>
+<p>For example we have the following data that I would like to work with.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div data-pagedtable="false">
+  <script data-pagedtable-source="" type="application/json">
+{"columns":[{"label":["tree"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["stofn"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["species"],"name":[3],"type":["chr"],"align":["left"]},{"label":["diam1"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["diam2"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["height_measured"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"1","3":"RG","4":"5.0","5":"5.1","6":"NA"},{"1":"2","2":"2","3":"RG","4":"14.7","5":"14.6","6":"8.38"},{"1":"3","2":"3","3":"RG","4":"12.7","5":"13.4","6":"NA"},{"1":"4","2":"4","3":"RG","4":"13.2","5":"13.8","6":"8.66"},{"1":"5","2":"5","3":"RG","4":"4.5","5":"4.7","6":"NA"},{"1":"6","2":"6","3":"RG","4":"10.3","5":"10.8","6":"NA"},{"1":"7","2":"7","3":"RG","4":"5.0","5":"4.0","6":"4.65"},{"1":"8","2":"8","3":"RG","4":"12.0","5":"12.0","6":"NA"},{"1":"9","2":"9","3":"RG","4":"11.0","5":"11.3","6":"NA"},{"1":"10","2":"10","3":"RG","4":"4.5","5":"4.0","6":"NA"},{"1":"11","2":"11","3":"RG","4":"8.5","5":"8.2","6":"NA"},{"1":"12","2":"12","3":"RG","4":"9.8","5":"9.9","6":"NA"},{"1":"13","2":"13","3":"RG","4":"11.2","5":"11.5","6":"7.52"},{"1":"14","2":"14","3":"RG","4":"11.6","5":"11.3","6":"NA"},{"1":"15","2":"15","3":"RG","4":"6.4","5":"6.4","6":"NA"},{"1":"16","2":"16","3":"RG","4":"7.2","5":"6.7","6":"NA"},{"1":"17","2":"17","3":"RG","4":"9.0","5":"8.7","6":"NA"},{"1":"18","2":"18","3":"RG","4":"9.2","5":"9.2","6":"NA"},{"1":"19","2":"19","3":"RG","4":"7.5","5":"7.3","6":"NA"},{"1":"20","2":"20","3":"RG","4":"11.8","5":"11.6","6":"NA"},{"1":"21","2":"21","3":"RG","4":"8.2","5":"8.7","6":"NA"},{"1":"22","2":"22","3":"RG","4":"11.9","5":"11.8","6":"NA"},{"1":"23","2":"23","3":"RG","4":"8.7","5":"8.0","6":"NA"},{"1":"24","2":"24","3":"RG","4":"8.2","5":"8.2","6":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<p>First I would like to do basic manipulation of the data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>trees<span class="sc">$</span>dbh <span class="ot">&lt;-</span> (trees<span class="sc">$</span>diam1 <span class="sc">+</span> trees<span class="sc">$</span>diam2) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>trees<span class="sc">$</span>ba <span class="ot">&lt;-</span> (trees<span class="sc">$</span>dbh<span class="sc">/</span><span class="dv">200</span>)<span class="sc">^</span><span class="dv">2</span> <span class="sc">*</span> pi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For the next trick we use linear regressions to calculate the expected height of the trees. We then use <code>coalesce()</code> to copy back the height we already knew. From there we can calculate the volume of each tree using the volume functions <span class="citation" data-cites="arnórsnorrason2006">(<a href="#ref-arnórsnorrason2006" role="doc-biblioref">Arnór Snorrason and Stefán Freyr Einarsson 2006</a>)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>trees<span class="sc">$</span>height <span class="ot">&lt;-</span> <span class="fu">lm</span>(height_measured <span class="sc">~</span> ba, <span class="at">data=</span>trees) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">predict</span>(trees)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>trees<span class="sc">$</span>height <span class="ot">&lt;-</span> <span class="fu">coalesce</span>(trees<span class="sc">$</span>height_measured, trees<span class="sc">$</span>height)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>trees<span class="sc">$</span>v <span class="ot">&lt;-</span> <span class="fl">0.1299</span> <span class="sc">*</span> trees<span class="sc">$</span>dbh<span class="sc">^</span><span class="fl">1.6834</span> <span class="sc">*</span> trees<span class="sc">$</span>height<span class="sc">^</span><span class="fl">0.8598</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/final-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="math-with-r" class="level2">
+<h2 class="anchored" data-anchor-id="math-with-r">Math with R</h2>
+<p>Using LaTeX math symbols we can communicate mathematical functions in a nice manner. For example we can talk about BAL as described by Arne Pommerening’s excellent article <a href="https://blogg.slu.se/forest-biometrics/2017/05/26/basal-area-in-larger-trees-and-the-growth-compensation-point/"><em>Basal area in larger trees and the growth compensation point</em></a> where he explains BAL as such:</p>
+<blockquote class="blockquote">
+<p><em>BAL</em> is related to available light, since with increasing basal area of larger trees there is less light available for smaller trees. In a sense <em>BAL</em> is a surrogate for light measurements with the benefit that stem diameters and basal area are easier to measure.</p>
+</blockquote>
+<p><span class="math display">\[BAL_i(t) = G(t) \cdot (1 - p_i(t)) \text{ where } p_i(t) = \frac{1}{G(t)} \sum_{\leq g_i(t)} g_i(t)\]</span></p>
+<p>He also give us an example function in R. Let us use it to calculate the BAL of individual trees in our example data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>bal <span class="ot">&lt;-</span> <span class="cf">function</span>(ba, area) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> sumba <span class="ot">&lt;-</span> <span class="fu">sum</span>(ba)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> basmaller <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> pix <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> bal <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span> <span class="sc">:</span> <span class="fu">length</span>(ba)) {</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>   bax <span class="ot">&lt;-</span> ba[i]</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>   basmaller <span class="ot">&lt;-</span> <span class="fu">sum</span>(ba[ba <span class="sc">&lt;=</span> bax])</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>   pix <span class="ot">&lt;-</span> basmaller <span class="sc">/</span> sumba</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>   bal[i] <span class="ot">&lt;-</span> sumba <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> pix) <span class="sc">/</span> area</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a> }</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a> <span class="fu">return</span>(bal)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># An then run it for out 0.54ha example stand.</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>trees<span class="sc">$</span>bal <span class="ot">&lt;-</span> <span class="fu">bal</span>(trees<span class="sc">$</span>ba, <span class="fl">0.54</span><span class="sc">/</span><span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="R,TidyTuesday,Forestry,GIS" data-listing-date-sort="1641765600000" data-listing-file-modified-sort="1696753209881" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1027">
-<div class="thumbnail">
-<p><a href="./posts/2022-01-10-forests-of-europe/index.html" class="no-external"></a></p><a href="./posts/2022-01-10-forests-of-europe/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/2022-01-10-forests-of-europe/index_files/figure-html/cover-1.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/2022-01-10-forests-of-europe/index.html" class="no-external"></a></p>
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-quarto" class="csl-entry" role="listitem">
+Allaire, JJ. 2022. <em>Quarto: R Interface to ’Quarto’ Markdown Publishing System</em>. <a href="https://CRAN.R-project.org/package=quarto">https://CRAN.R-project.org/package=quarto</a>.
 </div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2022-01-10-forests-of-europe/index.html" class="no-external">Forests of Europe</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2022-01-10-forests-of-europe/index.html" class="no-external"></a>
+<div id="ref-arnórsnorrason2006" class="csl-entry" role="listitem">
+Arnór Snorrason, and Stefán Freyr Einarsson. 2006. <span>“Single-Tree Biomass and Stem Volume Functions for Eleven Tree Species Used in Icelandic Forestry.”</span> <em>Icelandic Agricultural Sciences</em>, 15–24. <a href="https://www.semanticscholar.org/paper/Single-tree-biomass-and-stem-volume-functions-for-Snorrason-Einarsson/6668a0d8e81f7c32c0a0926d99b3451c9c69c160">https://www.semanticscholar.org/paper/Single-tree-biomass-and-stem-volume-functions-for-Snorrason-Einarsson/6668a0d8e81f7c32c0a0926d99b3451c9c69c160</a>.
 </div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
-R
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('TidyTuesday'); return false;">
-TidyTuesday
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Forestry'); return false;">
-Forestry
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('GIS'); return false;">
-GIS
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/2022-01-10-forests-of-europe/index.html" class="no-external">In this post I wish to continue a little bit with the TidyTuesday deforestation data I worked with in the last post. The inspiration came from wanting to get my hands dirty with map data and the sf package. </a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2022-01-10-forests-of-europe/index.html" class="no-external">
-<div class="listing-date">
-Jan 10, 2022
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="R,TidyTuesday,Forestry" data-listing-date-sort="1639951200000" data-listing-file-modified-sort="1696753209880" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="714">
-<div class="thumbnail">
-<p><a href="./posts/2021-12-20-deforestation/index.html" class="no-external"></a></p><a href="./posts/2021-12-20-deforestation/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/2021-12-20-deforestation/index_files/figure-html/forest-area-1.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/2021-12-20-deforestation/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2021-12-20-deforestation/index.html" class="no-external">Deforestation</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2021-12-20-deforestation/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
-R
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('TidyTuesday'); return false;">
-TidyTuesday
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Forestry'); return false;">
-Forestry
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/2021-12-20-deforestation/index.html" class="no-external">TidyTuesday is a weekly community event where many participants in the R ecosystem join together to visualize a dataset. I decided to begin with an older dataset from week 15 of 2021 that focuses on deforestation. </a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2021-12-20-deforestation/index.html" class="no-external">
-<div class="listing-date">
-Dec 20, 2021
-</div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="R,Quarto" data-listing-date-sort="1619298000000" data-listing-file-modified-sort="1696753209879" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="467">
-<div class="thumbnail">
-<p><a href="./posts/2021-04-25-welcome/index.html" class="no-external"></a></p><a href="./posts/2021-04-25-welcome/index.html" class="no-external">
-<p><img loading="lazy" src="./posts/2021-04-25-welcome/index_files/figure-html/final-1.png" class="thumbnail-image"></p>
-</a><p><a href="./posts/2021-04-25-welcome/index.html" class="no-external"></a></p>
-</div>
-<div class="body">
-<h3 class="no-anchor listing-title">
-<a href="./posts/2021-04-25-welcome/index.html" class="no-external">First Quarto post</a>
-</h3>
-<div class="listing-subtitle">
-<a href="./posts/2021-04-25-welcome/index.html" class="no-external"></a>
-</div>
-<div class="listing-categories">
-<div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
-R
-</div>
-<div class="listing-category" onclick="window.quartoListingCategory('Quarto'); return false;">
-Quarto
-</div>
-</div>
-<div class="listing-description">
-<a href="./posts/2021-04-25-welcome/index.html" class="no-external">This is just a demo post. The idea is to test the capabilities of Quarto as a blogging platform. In this post I am just trying out a few capabilities of Quarto and how well it is suited to the kinds of things I would like to write about. Amongst other things. However, time will tell on how well I can focus on writing articles here. </a>
-</div>
-</div>
-<div class="metadata">
-<a href="./posts/2021-04-25-welcome/index.html" class="no-external">
-<div class="listing-date">
-Apr 25, 2021
-</div>
-</a>
-</div>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div></main> <!-- /main -->
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -751,6 +746,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
+<script src="https://giscus.app/client.js" data-repo="JonGretar/JonGretar.github.io" data-repo-id="MDEwOlJlcG9zaXRvcnkzNjE1NDczMDI=" data-category="BlogComments" data-category-id="DIC_kwDOFYzGJs4CBFLC" data-mapping="pathname" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="light">
 </div> <!-- /content -->
 
 
